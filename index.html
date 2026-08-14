@@ -105,12 +105,13 @@
     .best-card .bt{ color:var(--warn); font-weight:800; font-size:0.4em; margin-bottom:6px; }
     .best-card .bd{ color:#fff; font-size:0.38em; line-height:1.5; }
 
-    /* 步驟完成頁 */
-    .done-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:center; }
-    .done-grid .diabox{ background:var(--photobg); border-radius:12px; padding:8px; display:flex; align-items:center; justify-content:center; }
+    /* 步驟完成頁：三張圖合併於單一深色大區塊 */
+    .done-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:center;
+      background:var(--photobg); border:1px solid var(--line); border-radius:14px; padding:16px; }
+    .done-grid .diabox{ display:flex; align-items:center; justify-content:center; }
     .done-grid .diabox img{ max-width:100%; max-height:330px; object-fit:contain; }
-    .done-photos{ display:grid; gap:10px; }
-    .done-photos .pbox{ background:var(--photobg); border-radius:10px; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .done-photos{ display:grid; gap:12px; }
+    .done-photos .pbox{ border-radius:8px; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .done-photos .pbox img{ max-width:100%; max-height:100%; object-fit:contain; }
     .key-strip{ margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 20px; font-size:0.38em; color:#e6ede8; line-height:1.7; }
     .key-strip b{ color:var(--success); }
