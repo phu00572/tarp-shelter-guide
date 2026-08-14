@@ -104,7 +104,6 @@ s += f'<line x1="{x0}" y1="{band_y}" x2="{x1}" y2="{band_y}" stroke="{RED}" stro
 for bx in (337.5, 500, 662.5):
     s += f'<line x1="{bx}" y1="{band_y+10}" x2="{bx}" y2="{y1-14}" stroke="{RED}" stroke-width="3.5" marker-end="url(#ar)"/>'
 s += badge(*P["N"], "3", ORANGE, 22) + badge(*P["H"], "4", ORANGE, 22)
-s += f'<text x="{x1+16}" y="{band_y-8}" font-size="20" fill="{RED}" text-anchor="start">¼</text>'
 s += cap("將 N、H 掛點以下約四分之一的布往下折，整理後暫時固定", RED)
 (OUT / "bao_2.svg").write_text(svg(s), encoding="utf-8")
 
@@ -127,15 +126,15 @@ gy = 520
 s = defs()
 s += f'<rect x="0" y="{gy}" width="{VW}" height="{VH-gy}" fill="{GROUND}" fill-opacity="0.35"/>'
 s += f'<line x1="0" y1="{gy}" x2="{VW}" y2="{gy}" stroke="{GROUND}" stroke-width="4"/>'
-apex = (540, 175); back = (880, gy - 4); front = (230, gy - 4)
+apex = (500, 175); back = (815, gy - 4); front = (185, gy - 4)   # 對稱置中於 x=500
 s += f'<path d="M{apex[0]} {apex[1]} L{back[0]} {back[1]} L{apex[0]} {gy-4} Z" fill="{TARP}" fill-opacity="0.8" stroke="{INK}" stroke-width="3"/>'
 s += f'<path d="M{apex[0]} {apex[1]} L{front[0]} {front[1]} L{apex[0]} {gy-4} Z" fill="{TARP2}" fill-opacity="0.55" stroke="{INK}" stroke-width="2.5"/>'
 s += f'<line x1="{apex[0]}" y1="{apex[1]}" x2="{apex[0]}" y2="{gy-4}" stroke="{POLE}" stroke-width="9"/>'
 s += f'<circle cx="{apex[0]}" cy="{apex[1]}" r="9" fill="{ROPE}"/>'
-s += f'<text x="{apex[0]+18}" y="{apex[1]-6}" font-size="21" font-weight="700" fill="{ROPE}">上方用繩綁緊</text>'
-s += f'<line x1="{apex[0]}" y1="{apex[1]}" x2="150" y2="{gy-4}" stroke="{ROPE}" stroke-width="4" stroke-dasharray="12 8"/>'
-s += stake(150, gy - 4) + stake(back[0], gy - 4)
-s += badge(apex[0], apex[1] - 52, "5", CYAN, 25)
+s += f'<text x="{apex[0]}" y="{apex[1]-14}" font-size="20" font-weight="700" fill="{ROPE}" text-anchor="middle">上方用繩綁緊</text>'
+s += f'<line x1="{apex[0]}" y1="{apex[1]}" x2="120" y2="{gy-4}" stroke="{ROPE}" stroke-width="4" stroke-dasharray="12 8"/>'
+s += stake(120, gy - 4) + stake(back[0], gy - 4) + stake(front[0], gy - 4)
+s += badge(apex[0], apex[1] - 58, "5", CYAN, 25)
 s += f'<text x="{apex[0]-8}" y="{gy-120}" font-size="22" font-weight="700" fill="{CYAN}" text-anchor="middle">登山杖 120–125 cm</text>'
 s += cap("穿入天幕下方垂直撐起 → 上方綁緊 → 往外拉繩下釘固定", GREEN)
 (OUT / "bao_4.svg").write_text(svg(s), encoding="utf-8")
@@ -145,16 +144,16 @@ gy = 520
 s = defs()
 s += f'<rect x="0" y="{gy}" width="{VW}" height="{VH-gy}" fill="{GROUND}" fill-opacity="0.35"/>'
 s += f'<line x1="0" y1="{gy}" x2="{VW}" y2="{gy}" stroke="{GROUND}" stroke-width="4"/>'
-apex = (560, 165); back = (890, gy - 4); front = (210, gy - 4)
+apex = (500, 165); back = (815, gy - 4); front = (185, gy - 4)   # 對稱置中於 x=500
 s += f'<path d="M{apex[0]} {apex[1]} L{back[0]} {back[1]} L{apex[0]} {gy-4} Z" fill="{TARP}" fill-opacity="0.85" stroke="{INK}" stroke-width="3"/>'
 s += f'<path d="M{apex[0]} {apex[1]} L{front[0]} {front[1]} L{apex[0]} {gy-4} Z" fill="{TARP2}" fill-opacity="0.5" stroke="{INK}" stroke-width="2.5"/>'
 s += f'<line x1="{apex[0]}" y1="{apex[1]}" x2="{apex[0]}" y2="{gy-4}" stroke="{POLE}" stroke-width="9"/>'
 s += f'<line x1="{apex[0]}" y1="{apex[1]}" x2="120" y2="{gy-4}" stroke="{ROPE}" stroke-width="4" stroke-dasharray="12 8"/>'
-s += stake(120, gy - 4) + stake(back[0], gy - 4)
-s += f'<text x="720" y="380" font-size="24" font-weight="700" fill="#fff" text-anchor="middle">封閉式帳身</text>'
+s += stake(120, gy - 4) + stake(back[0], gy - 4) + stake(front[0], gy - 4)
+s += f'<text x="650" y="395" font-size="23" font-weight="700" fill="#fff" text-anchor="middle">封閉式帳身</text>'
 s += f'<text x="330" y="{gy-30}" font-size="21" font-weight="700" fill="{TEXT}" text-anchor="middle">前庭（可炊煮）</text>'
-s += f'<line x1="270" y1="{gy-70}" x2="330" y2="{gy-20}" stroke="{RED}" stroke-width="3.5" marker-end="url(#ar)"/>'
-s += f'<line x1="850" y1="{gy-70}" x2="800" y2="{gy-20}" stroke="{RED}" stroke-width="3.5" marker-end="url(#ar)"/>'
+s += f'<line x1="255" y1="{gy-70}" x2="305" y2="{gy-20}" stroke="{RED}" stroke-width="3.5" marker-end="url(#ar)"/>'
+s += f'<line x1="760" y1="{gy-70}" x2="715" y2="{gy-20}" stroke="{RED}" stroke-width="3.5" marker-end="url(#ar)"/>'
 s += f'<text x="{VW/2}" y="120" font-size="22" font-weight="700" fill="{GREEN}" text-anchor="middle">多餘布料「由外往內」塞並封起</text>'
 s += cap("用登山杖的繩把布面往外拉起，增加帳內頭部高度與空間", GREEN)
 (OUT / "bao_done.svg").write_text(svg(s), encoding="utf-8")
