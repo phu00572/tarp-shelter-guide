@@ -621,7 +621,7 @@
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
   import {
     getFirestore, collection, addDoc, onSnapshot, serverTimestamp,
-    query, orderBy, doc, setDoc, updateDoc
+    query, orderBy, doc, setDoc, updateDoc, getDocs, deleteDoc
   } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
   import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
   import { initializeAppCheck, ReCaptchaV3Provider } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app-check.js';
@@ -758,6 +758,25 @@
   };
   document.getElementById('qa-handle')?.addEventListener('click', ()=>window.toggleQA());
   qaOverlay?.addEventListener('click', ()=>window.toggleQA(false));
+
+  /* ===== 老師專用：清空所有互動資料（在真實網頁執行，能通過 App Check）=====
+     用法：課後在簡報網址後面加 ?reset=1 開啟（例：.../tarp-shelter-guide/?reset=1），
+     會先跳確認再清空；也可在瀏覽器主控台輸入 clearInteractions()。學生端不會用到。 */
+  window.clearInteractions = async function(silent){
+    try{
+      let total=0;
+      for(const c of [SLUG+'_wordcloud', SLUG+'_qa', SLUG+'_board']){
+        const snap = await getDocs(collection(fdb, c));
+        for(const d of snap.docs){ await deleteDoc(d.ref); total++; }
+      }
+      try{ await deleteDoc(doc(fdb, SLUG+'_poll', 'results')); }catch(e){}
+      if(!silent) alert('已清空互動資料（文字雲／提問牆／白板／投票），共 '+total+' 筆。');
+      return total;
+    }catch(e){ console.error(e); if(!silent) alert('清空失敗：'+(e&&e.message||e)); }
+  };
+  if(new URLSearchParams(location.search).get('reset')==='1'){
+    setTimeout(()=>{ if(confirm('【老師專用】確定清空本簡報所有互動資料？\n（文字雲／提問牆／白板／投票）')) window.clearInteractions(); }, 800);
+  }
 
   /* ===== 比較雷達圖 ===== */
   let chartInited = false;
