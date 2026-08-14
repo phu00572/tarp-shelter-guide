@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>外帳（天幕）搭設教學 · 四種搭法</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
@@ -12,149 +12,249 @@
   <style>
     :root{
       --accent:#e8643a; --accent2:#4fc3f7; --success:#81c784; --warn:#ffb74d;
-      --dark:#0d1117; --green:#2c5f3e; --card:rgba(255,255,255,0.055);
+      --green:#2c5f3e; --card:rgba(18,26,36,0.72); --line:rgba(255,255,255,0.10);
+      --photobg:#0a0e14;
     }
     .reveal{ font-family:'Segoe UI','Noto Sans TC','Microsoft JhengHei',sans-serif; }
     .reveal h1,.reveal h2,.reveal h3{ font-family:inherit; font-weight:700; letter-spacing:-0.01em; }
     .reveal h2{ color:var(--accent2); }
     .reveal .progress{ color:var(--accent); }
-    .reveal section{ text-align:left; }
-
-    /* 章節標題列 */
-    .sec-title{ font-size:1.15em; font-weight:800; color:var(--success); margin:0 0 4px; }
-    .sec-sub{ font-size:0.44em; color:#9db4a2; margin:0 0 14px; }
-
-    /* 通用卡片 */
-    .card{ background:var(--card); border:1px solid rgba(255,255,255,0.09); border-radius:12px; }
-    .num-badge{
-      flex:0 0 auto; width:38px; height:38px; border-radius:50%; background:var(--accent);
-      color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:19px;
+    .reveal .slides section{ text-align:left; }
+    /* 背景圖上加一層暗罩，確保文字對比 */
+    .reveal .backgrounds .slide-background-content::after{
+      content:''; position:absolute; inset:0; background:rgba(7,11,18,0.35);
     }
+
+    .sec-title{ font-size:1.05em; font-weight:800; color:var(--success); margin:0 0 4px; }
+    .sec-sub{ font-size:0.42em; color:#b9c7bd; margin:0 0 14px; line-height:1.5; }
+
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:12px;
+      backdrop-filter:blur(3px); }
+    .num-badge{ flex:0 0 auto; width:38px; height:38px; border-radius:50%; background:var(--accent);
+      color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:18px; }
     .num-badge.g{ background:var(--green); }
 
     /* 封面 */
     .title-slide{ text-align:center; }
     .title-slide .tag{ display:inline-block; background:var(--accent); color:#fff; padding:5px 16px;
-      border-radius:20px; font-size:0.5em; letter-spacing:0.08em; margin-bottom:0.6em; font-weight:700; }
-    .title-slide h1{ font-size:2.1em; color:#fff; margin:0.1em 0; text-shadow:0 2px 18px rgba(0,0,0,0.6); }
-    .title-slide .subtitle{ font-size:0.62em; color:#cfe0d2; margin-top:0.5em; }
-    .chips{ display:flex; gap:14px; justify-content:center; margin-top:1.1em; flex-wrap:wrap; }
-    .chip{ background:rgba(31,74,53,0.85); border:1.5px solid #5c7f52; border-radius:12px;
-      padding:12px 18px; display:flex; align-items:center; gap:10px; }
-    .chip .n{ color:var(--accent); font-weight:800; font-size:1.3em; }
-    .chip .t{ color:#fff; font-weight:700; font-size:0.5em; }
-    .title-slide .author{ margin-top:1.4em; font-size:0.42em; color:#9db4a2; }
+      border-radius:20px; font-size:0.46em; letter-spacing:0.06em; margin-bottom:0.6em; font-weight:700; }
+    .title-slide h1{ font-size:1.9em; color:#fff; margin:0.1em 0; text-shadow:0 2px 20px rgba(0,0,0,0.7); }
+    .title-slide .subtitle{ font-size:0.55em; color:#dfeade; margin-top:0.5em; }
+    .chips{ display:flex; gap:12px; justify-content:center; margin-top:1em; flex-wrap:wrap; }
+    .chip{ background:rgba(31,74,53,0.8); border:1.5px solid #5c7f52; border-radius:12px;
+      padding:10px 16px; display:flex; align-items:center; gap:9px; }
+    .chip .n{ color:var(--accent); font-weight:800; font-size:1.2em; }
+    .chip .t{ color:#fff; font-weight:700; font-size:0.46em; }
+    .title-slide .author{ margin-top:1.3em; font-size:0.4em; color:#a9c0b0; }
 
-    /* 四型照片一覽 */
-    .type-overview{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0.4em; }
-    .to-card{ border-radius:12px; overflow:hidden; background:var(--card); border:1px solid rgba(255,255,255,0.09); }
-    .to-card img{ width:100%; height:150px; object-fit:cover; display:block; }
+    /* 四型照片一覽（完整帳篷，contain）*/
+    .type-overview{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0.3em; }
+    .to-card{ border-radius:12px; overflow:hidden; background:var(--card); border:1px solid var(--line); }
+    .to-photo{ width:100%; height:168px; background:var(--photobg); display:flex; align-items:center; justify-content:center; }
+    .to-photo img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .to-bar{ display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--green); }
-    .to-bar .n{ color:var(--accent); font-weight:800; font-size:0.6em; }
-    .to-bar .nm{ color:#fff; font-weight:700; font-size:0.5em; }
-    .to-bar .ds{ color:#e7f0e9; font-size:0.34em; margin-left:auto; text-align:right; line-height:1.35; }
+    .to-bar .n{ color:var(--accent); font-weight:800; font-size:0.58em; }
+    .to-bar .nm{ color:#fff; font-weight:700; font-size:0.46em; white-space:nowrap; }
+    .to-bar .ds{ color:#e7f0e9; font-size:0.32em; margin-left:auto; text-align:right; line-height:1.35; }
 
-    /* 圖標卡（裝備/變化）*/
-    .icon-grid{ display:grid; gap:14px; margin-top:0.3em; }
+    /* 圖標卡 */
+    .icon-grid{ display:grid; gap:14px; margin-top:0.2em; }
     .icon-grid.g6{ grid-template-columns:repeat(3,1fr); }
     .icon-grid.g3{ grid-template-columns:repeat(3,1fr); }
-    .ic{ background:var(--card); border:1px solid rgba(255,255,255,0.09); border-top:4px solid var(--accent2);
-      border-radius:12px; padding:16px 14px; text-align:center; }
-    .ic img{ width:78px; height:78px; object-fit:contain; margin:0 auto 8px; display:block;
-      filter:drop-shadow(0 0 12px rgba(79,195,247,0.55)); }
-    .ic .t{ font-size:0.46em; font-weight:800; color:var(--accent2); margin-bottom:5px; }
-    .ic .d{ font-size:0.34em; color:#c3cdd6; line-height:1.5; }
-    .icon-grid.g3 .ic .d{ font-size:0.38em; }
-    .icon-grid.g3 .ic .t{ font-size:0.56em; }
+    .ic{ background:var(--card); border:1px solid var(--line); border-top:4px solid var(--accent2);
+      border-radius:12px; padding:14px 12px; text-align:center; }
+    .ic img{ width:74px; height:74px; object-fit:contain; margin:0 auto 8px; display:block;
+      filter:drop-shadow(0 0 12px rgba(79,195,247,0.5)); }
+    .ic .t{ font-size:0.42em; font-weight:800; color:var(--accent2); margin-bottom:5px; }
+    .ic .d{ font-size:0.32em; color:#c8d2da; line-height:1.5; }
+    .icon-grid.g3 .ic .d{ font-size:0.36em; }
+    .icon-grid.g3 .ic .t{ font-size:0.52em; }
+    .icon-grid.g3 .ic img{ width:96px; height:96px; }
 
-    /* 圖解主視覺頁 */
+    /* 原則卡（第5頁，文字版）*/
+    .prin-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:0.2em; }
+    .prin-card{ display:flex; gap:12px; align-items:flex-start; padding:16px 16px; }
+    .prin-card .tx .t{ font-weight:800; color:var(--success); font-size:0.46em; margin-bottom:5px; }
+    .prin-card .tx .d{ font-size:0.34em; color:#c8d2da; line-height:1.55; }
+
+    /* 圖解主視覺頁（示意圖完整 contain）*/
     .diagram-hero{ text-align:center; }
-    .diagram-hero img{ max-width:78%; max-height:520px; border-radius:12px;
-      box-shadow:0 8px 40px rgba(0,0,0,0.4); }
-    .tip{ display:inline-block; margin-top:16px; background:rgba(239,231,214,0.14);
-      border:1.5px solid var(--warn); border-radius:22px; padding:9px 22px; font-size:0.4em; color:#f0e9d8; }
+    .diagram-hero .dwrap{ background:var(--photobg); border-radius:12px; padding:10px; display:inline-block;
+      max-width:80%; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
+    .diagram-hero img{ max-width:100%; max-height:460px; object-fit:contain; display:block; }
+    .tip{ display:inline-block; margin-top:14px; background:rgba(20,26,40,0.82); border:1.5px solid var(--warn);
+      border-radius:22px; padding:9px 22px; font-size:0.38em; color:#f0e9d8; line-height:1.5; }
     .tip b{ color:var(--warn); }
 
-    /* 帳型頁：左圖右步驟 */
-    .type-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:20px; align-items:stretch; }
+    /* 帳型頁：左圖右步驟（圖片完整 contain）*/
+    .type-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:20px; align-items:stretch; }
     .type-left{ display:flex; flex-direction:column; gap:12px; }
-    .type-left .dia{ background:#fbfaf6; border-radius:12px; padding:8px; text-align:center; }
-    .type-left .dia img{ width:100%; max-height:270px; object-fit:contain; }
-    .type-left .pho img{ width:100%; height:120px; object-fit:cover; border-radius:10px; display:block; }
+    .type-left .dia{ background:var(--photobg); border-radius:12px; padding:8px; text-align:center;
+      display:flex; align-items:center; justify-content:center; min-height:240px; }
+    .type-left .dia img{ max-width:100%; max-height:250px; object-fit:contain; }
+    .type-left .pho{ background:var(--photobg); border-radius:10px; height:130px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .type-left .pho img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .steps-card{ padding:18px 20px; }
-    .steps-card h3{ color:var(--success); font-size:0.62em; margin:0 0 12px; }
+    .steps-card h3{ color:var(--success); font-size:0.58em; margin:0 0 12px; }
     .steps-card ol{ margin:0; padding-left:0; list-style:none; counter-reset:s; }
-    .steps-card li{ counter-increment:s; position:relative; padding:0 0 12px 34px; font-size:0.42em; color:#e6ede8; line-height:1.5; }
+    .steps-card li{ counter-increment:s; position:relative; padding:0 0 12px 34px; font-size:0.4em; color:#e6ede8; line-height:1.5; }
     .steps-card li::before{ content:counter(s); position:absolute; left:0; top:0; width:24px; height:24px;
-      background:var(--accent); color:#fff; border-radius:50%; font-size:0.85em; font-weight:800;
+      background:var(--accent); color:#fff; border-radius:50%; font-size:0.8em; font-weight:800;
       display:flex; align-items:center; justify-content:center; }
-    .best-card{ margin-top:12px; background:var(--green); border-radius:12px; padding:14px 18px; }
-    .best-card .bt{ color:var(--warn); font-weight:800; font-size:0.42em; margin-bottom:6px; }
-    .best-card .bd{ color:#fff; font-size:0.4em; line-height:1.5; }
+    .best-card{ margin-top:12px; background:rgba(44,95,62,0.9); border:1px solid rgba(129,199,132,0.3); border-radius:12px; padding:13px 18px; }
+    .best-card .bt{ color:var(--warn); font-weight:800; font-size:0.4em; margin-bottom:6px; }
+    .best-card .bd{ color:#fff; font-size:0.38em; line-height:1.5; }
 
     /* 步驟完成頁 */
     .done-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:center; }
-    .done-grid img.dia{ width:100%; border-radius:12px; background:#fbfaf6; }
+    .done-grid .diabox{ background:var(--photobg); border-radius:12px; padding:8px; display:flex; align-items:center; justify-content:center; }
+    .done-grid .diabox img{ max-width:100%; max-height:330px; object-fit:contain; }
     .done-photos{ display:grid; gap:10px; }
-    .done-photos img{ width:100%; height:130px; object-fit:cover; border-radius:10px; }
-    .key-strip{ margin-top:14px; background:var(--card); border:1px solid rgba(255,255,255,0.09);
-      border-radius:12px; padding:14px 20px; font-size:0.4em; color:#e6ede8; line-height:1.7; }
+    .done-photos .pbox{ background:var(--photobg); border-radius:10px; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .done-photos .pbox img{ max-width:100%; max-height:100%; object-fit:contain; }
+    .key-strip{ margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 20px; font-size:0.38em; color:#e6ede8; line-height:1.7; }
     .key-strip b{ color:var(--success); }
 
     /* 出入口頁 */
     .door-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center; }
     .door-cards{ display:flex; flex-direction:column; gap:12px; }
     .door-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.44em; margin-bottom:4px; }
-    .door-card .tx .d{ font-size:0.36em; color:#c9d3cc; line-height:1.5; }
-    .door-grid img{ width:100%; height:380px; object-fit:cover; border-radius:12px; }
-
-    /* 原則頁 */
-    .principles-hero{ text-align:center; }
-    .principles-hero img{ max-width:88%; max-height:560px; }
+    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.42em; margin-bottom:4px; }
+    .door-card .tx .d{ font-size:0.34em; color:#cbd5ce; line-height:1.5; }
+    .door-photo{ background:var(--photobg); border-radius:12px; height:400px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .door-photo img{ max-width:100%; max-height:100%; object-fit:contain; }
 
     /* 安全 6 卡 */
-    .safe-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:0.3em; }
+    .safe-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:0.2em; }
     .safe-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.42em; margin-bottom:3px; }
-    .safe-card .tx .d{ font-size:0.34em; color:#c3cdd6; line-height:1.45; }
+    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.4em; margin-bottom:3px; }
+    .safe-card .tx .d{ font-size:0.32em; color:#c8d2da; line-height:1.45; }
 
     /* 結語 */
     .end-slide{ text-align:center; }
-    .end-slide h1{ font-size:1.9em; color:#fff; }
-    .end-slide .lead{ font-size:0.55em; color:#cfe0d2; line-height:1.7; margin:0.6em auto; max-width:80%; }
-    .end-slide .tagline{ font-size:0.42em; color:#9db4a2; font-style:italic; margin-top:1.2em; }
+    .end-slide h1{ font-size:1.7em; color:#fff; }
+    .end-slide .lead{ font-size:0.5em; color:#dfeade; line-height:1.7; margin:0.6em auto; max-width:82%; }
+    .end-slide .tagline{ font-size:0.4em; color:#a9c0b0; font-style:italic; margin-top:1em; }
 
     /* 互動通用 */
-    .ui-input{ width:100%; padding:9px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
-      background:rgba(255,255,255,0.08); color:#fff; font-size:13px; box-sizing:border-box; font-family:inherit; outline:none; }
-    .ui-btn{ padding:9px 14px; background:var(--accent2); color:#0d1117; border:none; border-radius:8px;
-      font-weight:700; font-size:13px; cursor:pointer; font-family:inherit; }
+    .ui-input{ width:100%; padding:11px 13px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+      background:rgba(255,255,255,0.09); color:#fff; font-size:15px; box-sizing:border-box; font-family:inherit; outline:none; }
+    .ui-btn{ padding:11px 15px; background:var(--accent2); color:#0d1117; border:none; border-radius:8px;
+      font-weight:700; font-size:15px; cursor:pointer; font-family:inherit; }
     .ui-btn:disabled{ opacity:0.5; cursor:default; }
-    .qhead{ font-size:1.05em; margin-bottom:0.4em; color:#fff; }
+    .qhead{ font-size:1em; margin-bottom:0.3em; color:#fff; }
     .live-badge{ display:inline-block; background:#ff4757; color:#fff; padding:2px 8px; border-radius:10px;
       font-size:0.5em; vertical-align:middle; animation:pulse 1.5s infinite; margin-left:8px; }
     @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.55;} }
 
+    /* 文字雲 */
+    .wc-wrap{ display:grid; grid-template-columns:250px 1fr; gap:14px; height:440px; }
+    .wc-side{ display:flex; flex-direction:column; gap:10px; min-height:0; }
+    .wc-form{ background:rgba(18,26,36,0.72); border-radius:10px; padding:14px; }
+    .wc-form .lb{ font-size:0.36em; color:var(--accent2); font-weight:700; margin-bottom:8px; }
+    .wc-listbox{ background:rgba(18,26,36,0.72); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
+    .wc-canvas-box{ background:rgba(10,14,20,0.6); border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--line); min-height:0; }
+    .wc-canvas-box canvas{ width:100%; height:100%; display:block; }
+
+    /* 投票 */
+    .poll-box{ display:flex; flex-direction:column; gap:12px; margin-top:0.7em; max-width:760px; }
+    .poll-btn{ width:100%; padding:14px 18px; background:rgba(18,26,36,0.7); border:1px solid var(--line);
+      border-radius:10px; color:#fff; font-size:0.46em; cursor:pointer; font-family:inherit; }
+
+    /* Q&A 側邊欄 */
     .qa-item{ background:rgba(255,255,255,0.06); border-left:3px solid var(--accent); border-radius:8px;
       padding:10px 12px; margin-bottom:8px; font-size:14px; display:flex; align-items:center; gap:10px; }
     .qa-text{ flex:1; color:#eee; line-height:1.5; text-align:left; }
     .qa-like{ flex:0 0 auto; background:rgba(232,100,58,0.15); border:1px solid rgba(232,100,58,0.4);
-      color:var(--accent); border-radius:20px; padding:4px 10px; cursor:pointer; font-size:13px; font-family:inherit; white-space:nowrap; }
-
-    /* 全域提問牆側邊欄 */
-    #qa-sidebar{ position:fixed; top:0; left:0; height:100vh; width:340px;
+      color:var(--accent); border-radius:20px; padding:5px 11px; cursor:pointer; font-size:13px; font-family:inherit; white-space:nowrap; }
+    #qa-sidebar{ position:fixed; top:0; left:0; height:100vh; width:min(86vw,340px);
       background:linear-gradient(180deg,#141a2e,#0d1117); border-right:1px solid rgba(79,195,247,0.25);
       box-shadow:6px 0 30px rgba(0,0,0,0.55); transform:translateX(-100%); transition:transform .35s ease; z-index:1000; }
-    @media (max-width:380px){ #qa-sidebar{ width:300px; } }
     #qa-sidebar.open{ transform:translateX(0); }
-    #qa-sidebar .qa-inner{ display:flex; flex-direction:column; height:100%; padding:26px 20px; box-sizing:border-box; }
-    #qa-handle{ position:absolute; right:-46px; top:50%; transform:translateY(-50%); width:46px; padding:18px 0;
+    #qa-sidebar .qa-inner{ display:flex; flex-direction:column; height:100%; padding:24px 18px; box-sizing:border-box; }
+    #qa-handle{ position:absolute; right:-42px; top:50%; transform:translateY(-50%); width:42px; padding:16px 0;
       background:var(--accent); color:#fff; border:none; border-radius:0 12px 12px 0; cursor:pointer;
       display:flex; flex-direction:column; align-items:center; gap:6px; font-family:inherit; box-shadow:3px 0 12px rgba(0,0,0,0.4); }
     #qa-handle .qh-dot{ width:7px; height:7px; border-radius:50%; background:#fff; animation:pulse 1.5s infinite; }
-    #qa-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:opacity .35s; z-index:999; }
+    #qa-overlay{ position:fixed; inset:0; background:rgba(0,0,0,0.5); opacity:0; pointer-events:none; transition:opacity .35s; z-index:999; }
     #qa-overlay.show{ opacity:1; pointer-events:auto; }
+
+    /* ============ 手機直式：整份改用窄版座標系，全部單欄 ============ */
+    body.mobile .sec-title{ font-size:1.15em; }
+    body.mobile .sec-sub{ font-size:0.5em; }
+    body.mobile .title-slide h1{ font-size:1.5em; }
+    body.mobile .title-slide .subtitle{ font-size:0.62em; }
+    body.mobile .title-slide .tag{ font-size:0.52em; }
+    body.mobile .chips{ gap:8px; }
+    body.mobile .chip .t{ font-size:0.56em; }
+
+    body.mobile .type-overview{ grid-template-columns:1fr; gap:12px; }
+    body.mobile .to-photo{ height:150px; }
+    body.mobile .to-bar .nm{ font-size:0.56em; }
+    body.mobile .to-bar .ds{ font-size:0.4em; }
+
+    body.mobile .icon-grid.g6{ grid-template-columns:1fr 1fr; gap:10px; }
+    body.mobile .icon-grid.g3{ grid-template-columns:1fr; gap:10px; }
+    body.mobile .ic{ display:flex; align-items:center; gap:12px; text-align:left; padding:10px 12px; }
+    body.mobile .ic img{ width:52px; height:52px; margin:0; flex:0 0 auto; }
+    body.mobile .icon-grid.g3 .ic img{ width:64px; height:64px; }
+    body.mobile .ic .t{ font-size:0.5em; margin-bottom:3px; }
+    body.mobile .ic .d{ font-size:0.4em; }
+    body.mobile .icon-grid.g3 .ic .t{ font-size:0.58em; }
+    body.mobile .icon-grid.g3 .ic .d{ font-size:0.42em; }
+
+    body.mobile .prin-grid{ grid-template-columns:1fr; gap:10px; }
+    body.mobile .prin-card{ padding:12px 14px; }
+    body.mobile .prin-card .tx .t{ font-size:0.56em; }
+    body.mobile .prin-card .tx .d{ font-size:0.42em; }
+
+    body.mobile .diagram-hero .dwrap{ max-width:100%; }
+    body.mobile .diagram-hero img{ max-height:300px; }
+    body.mobile .tip{ font-size:0.46em; display:block; margin-top:12px; }
+
+    body.mobile .type-grid{ grid-template-columns:1fr; gap:12px; }
+    body.mobile .type-left{ flex-direction:row; gap:10px; }
+    body.mobile .type-left .dia{ flex:1; min-height:0; padding:6px; }
+    body.mobile .type-left .dia img{ max-height:150px; }
+    body.mobile .type-left .pho{ flex:1; height:auto; }
+    body.mobile .steps-card{ padding:14px 16px; }
+    body.mobile .steps-card h3{ font-size:0.72em; }
+    body.mobile .steps-card li{ font-size:0.5em; padding-bottom:9px; }
+    body.mobile .best-card .bt{ font-size:0.5em; }
+    body.mobile .best-card .bd{ font-size:0.46em; }
+
+    body.mobile .done-grid{ grid-template-columns:1fr; gap:10px; }
+    body.mobile .done-grid .diabox img{ max-height:230px; }
+    body.mobile .done-photos{ grid-template-columns:1fr 1fr; }
+    body.mobile .done-photos .pbox{ height:110px; }
+    body.mobile .key-strip{ font-size:0.44em; }
+
+    body.mobile .door-grid{ grid-template-columns:1fr; gap:12px; }
+    body.mobile .door-photo{ height:230px; order:-1; }
+    body.mobile .door-card .tx .t{ font-size:0.52em; }
+    body.mobile .door-card .tx .d{ font-size:0.42em; }
+
+    body.mobile .safe-grid{ grid-template-columns:1fr; gap:9px; }
+    body.mobile .safe-card .tx .t{ font-size:0.52em; }
+    body.mobile .safe-card .tx .d{ font-size:0.42em; }
+
+    body.mobile .end-slide h1{ font-size:1.4em; }
+    body.mobile .end-slide .lead{ font-size:0.6em; max-width:96%; }
+    body.mobile .end-slide .tagline{ font-size:0.5em; }
+
+    /* 手機文字雲：單欄堆疊，隱藏長清單，畫布給足高度 */
+    body.mobile .wc-wrap{ display:flex; flex-direction:column; height:auto; gap:10px; }
+    body.mobile .wc-form{ display:flex; gap:8px; align-items:center; padding:10px; }
+    body.mobile .wc-form .lb{ display:none; }
+    body.mobile .wc-form .ui-input{ flex:1; }
+    body.mobile .wc-listbox{ display:none; }
+    body.mobile .wc-canvas-box{ height:340px; }
+    body.mobile .qhead{ font-size:0.86em; }
+
+    body.mobile .poll-btn{ font-size:0.6em; padding:13px 15px; }
+
+    /* Reveal 控制列在手機上放大一點、避免太小 */
+    body.mobile .reveal .controls{ right:6px; bottom:6px; }
   </style>
 </head>
 <body>
@@ -178,73 +278,80 @@
     </section>
 
     <!-- 2 破冰文字雲 -->
-    <section id="slide-wordcloud">
-      <h2 style="font-size:1.05em; margin-bottom:0.4em;">💬 說到搭外帳，能達到什麼樣的功能？<span class="live-badge">LIVE</span></h2>
-      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:440px;">
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px;">
-            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
+    <section id="slide-wordcloud" data-background-image="images/bg_ideas.png" data-background-opacity="0.16" data-background-size="cover">
+      <div class="qhead">💬 說到搭外帳，能達到什麼樣的功能？<span class="live-badge">LIVE</span></div>
+      <div class="wc-wrap">
+        <div class="wc-side">
+          <div class="wc-form">
+            <div class="lb">輸入你的答案</div>
             <input id="wc-input" type="text" placeholder="例如：擋風、遮雨…" maxlength="20" class="ui-input" />
             <button id="wc-btn" class="ui-btn" style="width:100%; margin-top:8px;">送出 ↵</button>
           </div>
-          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
-            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">熱門答案</div>
+          <div class="wc-listbox">
+            <div class="lb" style="font-size:0.36em; color:var(--accent2); font-weight:700; margin-bottom:8px;">熱門答案</div>
             <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
-            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
-              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　不同答案：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            <div style="margin-top:8px; font-size:0.32em; color:#8a97a0; border-top:1px solid var(--line); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>　不同：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
             </div>
           </div>
         </div>
-        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden; position:relative; border:1px solid rgba(255,255,255,0.07);">
-          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
-          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#444; font-size:0.42em; text-align:center; pointer-events:none; line-height:2;">輸入第一個答案<br>文字雲就會出現 ✨</div>
+        <div class="wc-canvas-box">
+          <canvas id="wc-canvas"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#5a6672; font-size:0.42em; text-align:center; pointer-events:none; line-height:2;">輸入第一個答案<br>文字雲就會出現 ✨</div>
         </div>
       </div>
     </section>
 
     <!-- 3 外帳是什麼 -->
-    <section>
+    <section data-background-image="images/bg_overview.png" data-background-opacity="0.18" data-background-size="cover">
       <div class="sec-title">先看懂：外帳是什麼、能做什麼</div>
       <div class="sec-sub">外帳（天幕）就是一片四邊有綁繩點的防水布。搭配營柱、登山杖、營繩與營釘，就能變出遮風、避雨、遮陽的各種遮蔽所。</div>
       <div class="type-overview">
-        <div class="to-card"><img src="images/bao_photo5.png" alt="包覆式外帳">
+        <div class="to-card"><div class="to-photo"><img src="images/bao_photo5.png" alt="包覆式外帳"></div>
           <div class="to-bar"><span class="n">1</span><span class="nm">包覆式外帳</span><span class="ds">封閉包覆、擋風保暖，適合強風與緊急避難</span></div></div>
-        <div class="to-card"><img src="images/a_photo.png" alt="A字帳">
+        <div class="to-card"><div class="to-photo"><img src="images/a_photo.png" alt="A字帳"></div>
           <div class="to-bar"><span class="n">2</span><span class="nm">A 字帳</span><span class="ds">中高兩低像屋頂，最快最通用的基本款</span></div></div>
-        <div class="to-card"><img src="images/lean_photo.png" alt="斜邊帳">
+        <div class="to-card"><div class="to-photo"><img src="images/lean_photo.png" alt="斜邊帳"></div>
           <div class="to-bar"><span class="n">3</span><span class="nm">斜邊帳</span><span class="ds">單斜面，擋單向風雨，包覆性佳</span></div></div>
-        <div class="to-card"><img src="images/l_photo.png" alt="L型帳">
+        <div class="to-card"><div class="to-photo"><img src="images/l_photo.png" alt="L型帳"></div>
           <div class="to-bar"><span class="n">4</span><span class="nm">L 型帳</span><span class="ds">擋單側風、有屋頂，可當客廳</span></div></div>
       </div>
     </section>
 
     <!-- 4 認識裝備與名詞 [ICON] -->
-    <section>
+    <section data-background-image="images/bg_gear.png" data-background-opacity="0.15" data-background-size="cover">
       <div class="sec-title">認識裝備與名詞</div>
       <div class="sec-sub">搭帳前先認得這幾樣，後面的步驟才聽得懂。</div>
       <div class="icon-grid g6">
-        <div class="ic"><img src="images/ic_pole.png" alt=""><div class="t">營柱 / 登山杖</div><div class="d">撐起帳身高度的支柱。沒有專用營柱時，登山杖就能替代。</div></div>
-        <div class="ic"><img src="images/ic_rope.png" alt=""><div class="t">營繩</div><div class="d">把帳角、柱頂拉向地面固定的繩子。決定帳型穩不穩。</div></div>
-        <div class="ic"><img src="images/ic_stake.png" alt=""><div class="t">營釘</div><div class="d">插入地面固定營繩與帳角的釘子。營釘要斜插，抓地才牢。</div></div>
-        <div class="ic"><img src="images/ic_knot.png" alt=""><div class="t">調節繩結（營繩結）</div><div class="d">營繩上打的可滑動繩結，用來收緊或放鬆營繩。</div></div>
-        <div class="ic"><img src="images/ic_loop.png" alt=""><div class="t">綁點（掛環）</div><div class="d">外帳邊緣與角落的繩圈，是綁營繩、下營釘的位置。</div></div>
-        <div class="ic"><img src="images/ic_ridge.png" alt=""><div class="t">屋脊（脊線）</div><div class="d">帳身最高的中央線，要拉「直挺」帳型才漂亮又抗風。</div></div>
+        <div class="ic"><img src="images/ic_pole.png" alt=""><div><div class="t">營柱 / 登山杖</div><div class="d">撐起帳身高度的支柱。沒有專用營柱時，登山杖就能替代。</div></div></div>
+        <div class="ic"><img src="images/ic_rope.png" alt=""><div><div class="t">營繩</div><div class="d">把帳角、柱頂拉向地面固定的繩子。決定帳型穩不穩。</div></div></div>
+        <div class="ic"><img src="images/ic_stake.png" alt=""><div><div class="t">營釘</div><div class="d">插入地面固定營繩與帳角的釘子。營釘要斜插，抓地才牢。</div></div></div>
+        <div class="ic"><img src="images/ic_knot.png" alt=""><div><div class="t">調節繩結（營繩結）</div><div class="d">營繩上打的可滑動繩結，用來收緊或放鬆營繩。</div></div></div>
+        <div class="ic"><img src="images/ic_loop.png" alt=""><div><div class="t">綁點（掛環）</div><div class="d">外帳邊緣與角落的繩圈，是綁營繩、下營釘的位置。</div></div></div>
+        <div class="ic"><img src="images/ic_ridge.png" alt=""><div><div class="t">屋脊（脊線）</div><div class="d">帳身最高的中央線，要拉「直挺」帳型才漂亮又抗風。</div></div></div>
       </div>
     </section>
 
-    <!-- 5 通用五原則 -->
-    <section>
-      <div class="sec-title" style="text-align:center;">搭帳通用五原則</div>
-      <div class="principles-hero"><img src="images/principles.png" alt="通用五原則"></div>
+    <!-- 5 通用五原則（文字卡片版）-->
+    <section data-background-image="images/bg_principles.png" data-background-opacity="0.18" data-background-size="cover">
+      <div class="sec-title">搭設前必懂：5 個通用原則</div>
+      <div class="sec-sub">任何帳型都適用，先抓大原則、再談步驟。</div>
+      <div class="prin-grid">
+        <div class="card prin-card"><div class="num-badge">1</div><div class="tx"><div class="t">判斷風向</div><div class="d">開口處避免朝向迎風面；先看樹梢、雲的方向或用指北針判斷。</div></div></div>
+        <div class="card prin-card"><div class="num-badge">2</div><div class="tx"><div class="t">避開危險地形</div><div class="d">遠離落石區、崩塌地、枯立木與低窪積水處。</div></div></div>
+        <div class="card prin-card"><div class="num-badge">3</div><div class="tx"><div class="t">注意排水</div><div class="d">選地面能排水、或有排水路線的位置，雨天才不積水。</div></div></div>
+        <div class="card prin-card"><div class="num-badge g">4</div><div class="tx"><div class="t">顧及舒適度</div><div class="d">營地要平整、傾斜度小，睡得穩、帳也搭得穩。</div></div></div>
+        <div class="card prin-card"><div class="num-badge g">5</div><div class="tx"><div class="t">搭設技巧</div><div class="d">營柱要直立、營繩拉力適中，四周力量均衡對抗。</div></div></div>
+      </div>
     </section>
 
     <!-- 6 章節：包覆式 [BG] -->
-    <section data-background-image="images/section_bao.png" data-background-opacity="0.5" data-background-size="cover">
-      <div style="max-width:64%;">
-        <div class="num-badge" style="width:56px; height:56px; font-size:28px; margin-bottom:18px;">1</div>
-        <h1 style="font-size:1.8em; color:#fff; margin:0;">包覆式外帳</h1>
-        <div style="color:var(--warn); font-weight:800; font-size:0.6em; margin:8px 0 16px;">封閉式單人避難帳</div>
-        <p style="font-size:0.5em; color:#eaf2ec; line-height:1.7;">
+    <section data-background-image="images/section_bao.png" data-background-opacity="0.55" data-background-size="cover">
+      <div style="max-width:66%;">
+        <div class="num-badge" style="width:54px; height:54px; font-size:26px; margin-bottom:16px;">1</div>
+        <h1 style="font-size:1.6em; color:#fff; margin:0;">包覆式外帳</h1>
+        <div style="color:var(--warn); font-weight:800; font-size:0.56em; margin:8px 0 16px;">封閉式單人避難帳</div>
+        <p style="font-size:0.46em; color:#eaf2ec; line-height:1.7;">
           用一片外帳把自己「包」起來，只用一支登山杖就能成型。<br>
           帳身封閉、前高後低，抗風、保暖。<br>
           <b style="color:#cfe0d2;">最適合：強風稜線、低溫、緊急避難過夜。</b>
@@ -253,48 +360,48 @@
     </section>
 
     <!-- 7 五固定點 -->
-    <section class="diagram-hero">
-      <div class="sec-title" style="text-align:center; font-size:0.9em;">包覆式外帳｜五個固定點</div>
-      <img src="images/bao_0.png" alt="五固定點">
+    <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜五個固定點</div>
+      <div class="dwrap"><img src="images/bao_0.png" alt="五固定點"></div>
       <div class="tip"><b>新手提示　</b>先把五個固定點記起來：B①、D② 在上緣，N③、H④ 在兩側，登山杖⑤ 在中央。</div>
     </section>
 
     <!-- 8 步驟1 -->
-    <section class="diagram-hero">
-      <div class="sec-title" style="text-align:center; font-size:0.9em;">包覆式外帳｜步驟 1</div>
-      <img src="images/bao_1.png" alt="步驟1">
+    <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 1</div>
+      <div class="dwrap"><img src="images/bao_1.png" alt="步驟1"></div>
       <div class="tip"><b>新手提示　</b>B① 先固定、D② 再固定；兩點都在上緣左右約四分之一處。</div>
     </section>
 
     <!-- 9 步驟2 -->
-    <section class="diagram-hero">
-      <div class="sec-title" style="text-align:center; font-size:0.9em;">包覆式外帳｜步驟 2</div>
-      <img src="images/bao_2.png" alt="步驟2">
+    <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 2</div>
+      <div class="dwrap"><img src="images/bao_2.png" alt="步驟2"></div>
       <div class="tip"><b>新手提示　</b>把 N、H 以下約四分之一的布往下折收整，先暫時壓住固定。</div>
     </section>
 
     <!-- 10 步驟3 -->
-    <section class="diagram-hero">
-      <div class="sec-title" style="text-align:center; font-size:0.9em;">包覆式外帳｜步驟 3</div>
-      <img src="images/bao_3.png" alt="步驟3">
+    <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 3</div>
+      <div class="dwrap"><img src="images/bao_3.png" alt="步驟3"></div>
       <div class="tip"><b>新手提示　</b>用一條兩頭打結、長 160–165 cm 的營繩量距離，最準也最快。</div>
     </section>
 
     <!-- 11 步驟4 -->
-    <section class="diagram-hero">
-      <div class="sec-title" style="text-align:center; font-size:0.9em;">包覆式外帳｜步驟 4</div>
-      <img src="images/bao_4.png" alt="步驟4">
+    <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 4</div>
+      <div class="dwrap"><img src="images/bao_4.png" alt="步驟4"></div>
       <div class="tip"><b>新手提示　</b>沒有登山杖時可用直木代替；杖上方一定要用繩綁緊防鬆脫。</div>
     </section>
 
     <!-- 12 完成：內部整理 -->
-    <section>
-      <div class="sec-title" style="font-size:0.95em;">包覆式外帳｜步驟 5 完成：內部整理</div>
+    <section data-background-image="images/bg_bao_done.png" data-background-opacity="0.16" data-background-size="cover">
+      <div class="sec-title" style="font-size:0.92em;">包覆式外帳｜步驟 5 完成：內部整理</div>
       <div class="done-grid">
-        <img class="dia" src="images/bao_done.png" alt="完成示意">
+        <div class="diabox"><img src="images/bao_done.png" alt="完成示意"></div>
         <div class="done-photos">
-          <img src="images/bao_photo5.png" alt="實拍1">
-          <img src="images/bao_photo7.png" alt="實拍2">
+          <div class="pbox"><img src="images/bao_photo5.png" alt="實拍1"></div>
+          <div class="pbox"><img src="images/bao_photo7.png" alt="實拍2"></div>
         </div>
       </div>
       <div class="key-strip">
@@ -303,7 +410,7 @@
     </section>
 
     <!-- 13 出入口：掀開式 -->
-    <section>
+    <section data-background-image="images/bg_bao_door.png" data-background-opacity="0.16" data-background-size="cover">
       <div class="sec-title">包覆式外帳｜出入口：掀開式</div>
       <div class="sec-sub">把前緣一側掀起固定，形成有遮雨的前庭。</div>
       <div class="door-grid">
@@ -312,12 +419,12 @@
           <div class="card door-card"><div class="num-badge">2</div><div class="tx"><div class="t">下雨天也好用</div><div class="d">掀起的前緣形成一塊「前庭」遮雨棚。下雨時可在前庭內炊煮，人和裝備都不淋雨。</div></div></div>
           <div class="card door-card"><div class="num-badge">3</div><div class="tx"><div class="t">收合就恢復封閉</div><div class="d">不需要時把前緣放下、下釘固定，帳身立刻回到封閉狀態，繼續擋風保暖。</div></div></div>
         </div>
-        <img src="images/bao_photo8.png" alt="掀開式出入口">
+        <div class="door-photo"><img src="images/bao_photo8.png" alt="掀開式出入口"></div>
       </div>
     </section>
 
     <!-- 14 A字帳 -->
-    <section>
+    <section data-background-image="images/bg_aframe.png" data-background-opacity="0.15" data-background-size="cover">
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:2px;">
         <div class="num-badge">2</div><div class="sec-title" style="margin:0;">A 字帳（屋脊型）</div>
       </div>
@@ -343,19 +450,19 @@
     </section>
 
     <!-- 15 A字帳三變化 [ICON] -->
-    <section>
+    <section data-background-image="images/bg_aframe.png" data-background-opacity="0.15" data-background-size="cover">
       <div class="sec-title">A 字帳的三種實用變化</div>
       <div class="sec-sub">同一個 A 字，微調就能因應不同天氣與地形。</div>
       <div class="icon-grid g3">
-        <div class="ic"><img src="images/ic_avar1.png" alt=""><div class="t">善用樹幹</div><div class="d">營地附近有樹時，用樹幹加輔助繩、引繩取代營柱撐起屋脊，四角再下營釘固定。</div></div>
-        <div class="ic"><img src="images/ic_avar2.png" alt=""><div class="t">單側降低擋風</div><div class="d">把風大那一側改低，外帳的邊角綁點直接用營釘固定到地面，單側擋風。</div></div>
-        <div class="ic"><img src="images/ic_avar3.png" alt=""><div class="t">降柱封單側</div><div class="d">將其中一邊的主柱移除、降低並固定在地面，只留單一側開放出入口，包覆性更強、更擋風。</div></div>
+        <div class="ic"><img src="images/ic_avar1.png" alt=""><div><div class="t">善用樹幹</div><div class="d">營地附近有樹時，用樹幹加輔助繩、引繩取代營柱撐起屋脊，四角再下營釘固定。</div></div></div>
+        <div class="ic"><img src="images/ic_avar2.png" alt=""><div><div class="t">單側降低擋風</div><div class="d">把風大那一側改低，外帳的邊角綁點直接用營釘固定到地面，單側擋風。</div></div></div>
+        <div class="ic"><img src="images/ic_avar3.png" alt=""><div><div class="t">降柱封單側</div><div class="d">將其中一邊的主柱移除、降低並固定在地面，只留單一側開放出入口，包覆性更強、更擋風。</div></div></div>
       </div>
-      <div class="tip" style="display:block; margin:18px auto 0; max-width:90%; text-align:center;"><b>原則　</b>風越大，帳身越低、開口越小；晴天求通風，就搭高、開口大。</div>
+      <div class="tip" style="display:block; margin:16px auto 0; max-width:92%; text-align:center;"><b>原則　</b>風越大，帳身越低、開口越小；晴天求通風，就搭高、開口大。</div>
     </section>
 
     <!-- 16 斜邊帳 -->
-    <section>
+    <section data-background-image="images/bg_lean.png" data-background-opacity="0.15" data-background-size="cover">
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:2px;">
         <div class="num-badge">3</div><div class="sec-title" style="margin:0;">斜邊帳（單斜面）</div>
       </div>
@@ -381,7 +488,7 @@
     </section>
 
     <!-- 17 L型帳 -->
-    <section>
+    <section data-background-image="images/bg_lshape.png" data-background-opacity="0.15" data-background-size="cover">
       <div style="display:flex; align-items:center; gap:12px; margin-bottom:2px;">
         <div class="num-badge">4</div><div class="sec-title" style="margin:0;">L 型帳（擋風牆＋屋頂）</div>
       </div>
@@ -407,21 +514,21 @@
     </section>
 
     <!-- 18 四型比較雷達圖 [CHART] -->
-    <section id="slide-chart">
+    <section id="slide-chart" data-background-image="images/bg_compare.png" data-background-opacity="0.16" data-background-size="cover">
       <div class="qhead">📊 四種搭法快速比較</div>
-      <p style="font-size:0.4em; color:#aaa; margin:0 0 6px;">數值越高代表該項越強（滿分 5）。點下方圖例可切換顯示某一帳型。</p>
-      <div style="max-width:640px; height:450px; margin:0 auto;"><canvas id="cmp-canvas"></canvas></div>
+      <p style="font-size:0.4em; color:#b9c7bd; margin:0 0 6px;">數值越高代表該項越強（滿分 5）。點下方圖例可切換顯示某一帳型。</p>
+      <div id="chart-box" style="max-width:620px; height:440px; margin:0 auto;"><canvas id="cmp-canvas"></canvas></div>
     </section>
 
     <!-- 19 投票 [INTERACT:poll] -->
-    <section id="slide-poll">
-      <h2 style="font-size:0.95em;">🗳️ 情境選擇：強風稜線、低溫、緊急避難過夜，你會選哪一種？<span class="live-badge">LIVE</span></h2>
-      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.8em; max-width:760px;"></div>
-      <div style="font-size:0.36em; color:#666; margin-top:0.8em;">已投票：<span id="poll-total">0</span> 人（可重複點改票）</div>
+    <section id="slide-poll" data-background-image="images/bg_compare.png" data-background-opacity="0.14" data-background-size="cover">
+      <div class="qhead">🗳️ 情境：強風稜線、低溫、緊急避難過夜，你會選哪一種？<span class="live-badge">LIVE</span></div>
+      <div id="poll-options" class="poll-box"></div>
+      <div style="font-size:0.36em; color:#8a97a0; margin-top:0.8em;">已投票：<span id="poll-total">0</span> 人（可重複點改票）</div>
     </section>
 
-    <!-- 20 安全收納 + 結語 [BG] -->
-    <section data-background-image="images/ending.png" data-background-opacity="0.32" data-background-size="cover">
+    <!-- 20 安全收納 -->
+    <section data-background-image="images/bg_safety.png" data-background-opacity="0.2" data-background-size="cover">
       <div class="sec-title">安全提醒與收納</div>
       <div class="safe-grid">
         <div class="card safe-card"><div class="num-badge">1</div><div class="tx"><div class="t">判斷風向</div><div class="d">開口避免朝向迎風面；先觀察樹梢、雲的方向或用指北針判斷。</div></div></div>
@@ -455,12 +562,12 @@
 <div id="qa-overlay"></div>
 <aside id="qa-sidebar" data-prevent-swipe>
   <button id="qa-handle" aria-label="開關提問牆">
-    <span style="font-size:19px;">🙋</span>
-    <span style="writing-mode:vertical-rl; letter-spacing:3px; font-weight:700; font-size:14px;">提問牆</span>
+    <span style="font-size:18px;">🙋</span>
+    <span style="writing-mode:vertical-rl; letter-spacing:3px; font-weight:700; font-size:13px;">提問牆</span>
     <span class="qh-dot"></span>
   </button>
   <div class="qa-inner">
-    <div style="font-size:19px; font-weight:700; color:var(--accent2); margin-bottom:16px;">🙋 匿名提問牆 <span class="live-badge">LIVE</span></div>
+    <div style="font-size:18px; font-weight:700; color:var(--accent2); margin-bottom:16px;">🙋 匿名提問牆 <span class="live-badge">LIVE</span></div>
     <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
       <input id="qa-input" class="ui-input" type="text" placeholder="輸入問題，按 Enter…" maxlength="80" />
       <button id="qa-btn" class="ui-btn">送出提問</button>
@@ -471,11 +578,42 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
+  // 依載具決定虛擬畫布尺寸：手機用窄版座標系，內容近 1:1 呈現、不再縮成一團
+  function deckSize(){
+    return (window.innerWidth < 760)
+      ? { width:460, height:840, margin:0.02, mobile:true }
+      : { width:1280, height:760, margin:0.04, mobile:false };
+  }
+  let curMobile = null;
+  // 依當前實際視窗寬度套用對應座標系與版面（可重複呼叫、冪等）
+  function applyResponsive(){
+    const n = deckSize();
+    if(n.mobile === curMobile){ Reveal.layout(); return; }
+    curMobile = n.mobile;
+    document.body.classList.toggle('mobile', n.mobile);
+    Reveal.configure({ width:n.width, height:n.height, margin:n.margin });
+    Reveal.layout();
+    const id = Reveal.getCurrentSlide && Reveal.getCurrentSlide()?.id;
+    if(id==='slide-wordcloud') setTimeout(()=>window.drawWordCloud&&window.drawWordCloud(),200);
+    if(id==='slide-chart') setTimeout(()=>window.initCmpChart&&window.initCmpChart(),200);
+  }
+  const ds = deckSize();
+  document.body.classList.toggle('mobile', ds.mobile);
+  curMobile = ds.mobile;
   Reveal.initialize({
     hash:true, transition:'slide', backgroundTransition:'fade',
     center:true, progress:true, controls:true, slideNumber:'c/t',
-    width:1280, height:760, margin:0.04, plugins:[]
+    width:ds.width, height:ds.height, margin:ds.margin,
+    minScale:0.2, maxScale:1.6,
+    scrollActivationWidth:null,   // 關閉自動捲動檢視，改用可控的窄版座標系（行為一致、跨裝置可預期）
+    plugins:[]
   });
+  // 真實視窗寬度在 ready / load / resize 後才確定 → 重新套用，避免初始化時機誤判
+  Reveal.on('ready', applyResponsive);
+  window.addEventListener('load', applyResponsive);
+  let rzT;
+  window.addEventListener('resize', ()=>{ clearTimeout(rzT); rzT = setTimeout(applyResponsive, 180); });
+  window.addEventListener('orientationchange', ()=>setTimeout(applyResponsive, 250));
 </script>
 
 <script type="module">
@@ -503,7 +641,7 @@
   const SLUG = 'tarpguide';
   const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
 
-  /* ===== 元件一：文字雲 ===== */
+  /* ===== 文字雲 ===== */
   const wordsRef = collection(fdb, SLUG + '_wordcloud');
   let wcData = [];
   window.wcSubmit = async function(){
@@ -523,11 +661,11 @@
     document.getElementById('wc-unique').textContent = wcData.length;
     document.getElementById('wc-list').innerHTML = wcData.slice(0,12).map(([w,c])=>
       `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span></div>`
-    ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+    ).join('') || '<div style="color:#5a6672;padding:8px 0;">尚無資料</div>';
     const empty = document.getElementById('wc-empty'); if(empty) empty.style.display = wcData.length>0?'none':'';
-    drawWordCloud();
+    window.drawWordCloud();
   });
-  function drawWordCloud(){
+  window.drawWordCloud = function(){
     const canvas = document.getElementById('wc-canvas');
     if(!canvas || typeof WordCloud==='undefined') return;
     const rect = canvas.getBoundingClientRect(); if(rect.width<10||rect.height<10) return;
@@ -535,13 +673,13 @@
     if(wcData.length===0) return;
     const maxCount = wcData[0][1];
     WordCloud(canvas, {
-      list: wcData.map(([w,c])=>[w, Math.max(18, Math.round((c/maxCount)*72))]),
+      list: wcData.map(([w,c])=>[w, Math.max(16, Math.round((c/maxCount)*64))]),
       gridSize:6, weightFactor:1, fontFamily:'"Microsoft JhengHei","Noto Sans TC",sans-serif',
       color:()=>COLORS[Math.floor(Math.random()*COLORS.length)], backgroundColor:'transparent', rotateRatio:0.3, shuffle:true
     });
-  }
+  };
 
-  /* ===== 元件二：投票 ===== */
+  /* ===== 投票 ===== */
   const POLL_OPTIONS = [
     { id:'bao',  label:'① 包覆式外帳' },
     { id:'a',    label:'② A 字帳' },
@@ -554,12 +692,12 @@
   const pollBox = document.getElementById('poll-options');
   POLL_OPTIONS.forEach(opt=>{
     const btn = document.createElement('button');
+    btn.className = 'poll-btn';
     btn.innerHTML = `<div style="display:flex;align-items:center;gap:12px;">
       <span id="pk-${opt.id}" style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;"></span>
       <span style="flex:1;text-align:left;">${opt.label}</span>
-      <span style="flex:0 0 130px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;"><span id="pb-${opt.id}" style="display:block;height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width .4s;"></span></span>
-      <span id="pp-${opt.id}" style="flex:0 0 42px;text-align:right;font-size:0.8em;color:#888;">0%</span></div>`;
-    btn.style.cssText = 'width:100%;padding:13px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:0.5em;cursor:pointer;font-family:inherit;';
+      <span style="flex:0 0 110px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;"><span id="pb-${opt.id}" style="display:block;height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width .4s;"></span></span>
+      <span id="pp-${opt.id}" style="flex:0 0 40px;text-align:right;font-size:0.8em;color:#9aa7b0;">0%</span></div>`;
     btn.onclick = ()=>vote(opt.id);
     pollBox.appendChild(btn);
   });
@@ -584,7 +722,7 @@
     });
   });
 
-  /* ===== 元件三：提問牆（全域側邊欄）===== */
+  /* ===== 提問牆（全域側邊欄）===== */
   const qaRef = collection(fdb, SLUG + '_qa');
   window.qaSubmit = async function(){
     const input = document.getElementById('qa-input');
@@ -605,7 +743,7 @@
     list.innerHTML = items.length ? items.map(q=>
       `<div class="qa-item"><span class="qa-text">${escapeHtml(q.text)}</span>
        <button class="qa-like" onclick="qaLike('${q.id}',${q.likes||0})">👍 ${q.likes||0}</button></div>`
-    ).join('') : '<div style="color:#555;text-align:center;padding:20px;font-size:14px;">還沒有問題，當第一個發問的人 🙋</div>';
+    ).join('') : '<div style="color:#5a6672;text-align:center;padding:20px;font-size:14px;">還沒有問題，當第一個發問的人 🙋</div>';
   });
   function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
@@ -620,7 +758,7 @@
   document.getElementById('qa-handle')?.addEventListener('click', ()=>window.toggleQA());
   qaOverlay?.addEventListener('click', ()=>window.toggleQA(false));
 
-  /* ===== 元件四：比較雷達圖（Chart.js，切到該頁才建立）===== */
+  /* ===== 比較雷達圖 ===== */
   let chartInited = false;
   window.initCmpChart = function(){
     if(chartInited || typeof Chart==='undefined') return;
@@ -639,27 +777,25 @@
       },
       options:{
         responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ labels:{ color:'#ddd', font:{ size:14 } } } },
+        plugins:{ legend:{ labels:{ color:'#ddd', font:{ size:13 } } } },
         scales:{ r:{
-          min:0, max:5, ticks:{ stepSize:1, color:'#888', backdropColor:'transparent' },
-          grid:{ color:'rgba(255,255,255,0.12)' }, angleLines:{ color:'rgba(255,255,255,0.12)' },
-          pointLabels:{ color:'#eaf2ec', font:{ size:15, weight:'700' } }
+          min:0, max:5, ticks:{ stepSize:1, color:'#8a97a0', backdropColor:'transparent' },
+          grid:{ color:'rgba(255,255,255,0.14)' }, angleLines:{ color:'rgba(255,255,255,0.14)' },
+          pointLabels:{ color:'#eaf2ec', font:{ size:14, weight:'700' } }
         } }
       }
     });
   };
 
-  /* 切頁重繪 */
   Reveal.on('slidechanged', e=>{
     const id = e.currentSlide?.id;
-    if(id==='slide-wordcloud') setTimeout(drawWordCloud, 150);
+    if(id==='slide-wordcloud') setTimeout(window.drawWordCloud, 150);
     if(id==='slide-chart')     setTimeout(window.initCmpChart, 150);
   });
   Reveal.on('ready', e=>{
-    if(e.currentSlide?.id==='slide-wordcloud') setTimeout(drawWordCloud, 200);
+    if(e.currentSlide?.id==='slide-wordcloud') setTimeout(window.drawWordCloud, 200);
   });
 
-  /* 手機防誤觸換頁 */
   document.querySelectorAll('[data-prevent-swipe]').forEach(el=>{
     ['touchstart','touchmove','touchend'].forEach(ev=>
       el.addEventListener(ev, e=>e.stopPropagation(), { passive:false }));
