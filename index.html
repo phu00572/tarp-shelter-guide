@@ -260,6 +260,21 @@
 
     /* Reveal 控制列在手機上放大一點、避免太小 */
     body.mobile .reveal .controls{ right:6px; bottom:6px; }
+
+    /* 手機直式：四型卡片標題列改為「編號+名稱」一行、說明另起一行左對齊（避免右擠、換行破碎）*/
+    body.mobile .to-bar{ flex-wrap:wrap; padding:10px 12px; }
+    body.mobile .to-bar .ds{ flex-basis:100%; margin-left:0; text-align:left; margin-top:5px; line-height:1.4; }
+
+    /* 手機直式：提問牆把手改為左下角小圓鈕（浮動），不再遮住頁面正中央的內容 */
+    body.mobile #qa-handle{
+      top:auto; bottom:16px; right:-48px; transform:none;
+      width:48px; height:48px; padding:0; border-radius:50%;
+      justify-content:center; align-items:center; box-shadow:2px 2px 14px rgba(0,0,0,0.55);
+    }
+    body.mobile #qa-handle > span:nth-child(2), body.mobile #qa-handle .qh-dot{ display:none; }
+    body.mobile #qa-handle > span:first-child{ font-size:23px; }
+    /* 側邊欄開啟時，把手回到面板右緣（維持關閉鍵手感）*/
+    body.mobile #qa-sidebar.open #qa-handle{ top:50%; bottom:auto; transform:translateY(-50%); }
   </style>
 </head>
 <body>
@@ -583,11 +598,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-  // 依載具決定虛擬畫布尺寸：手機用窄版座標系，內容近 1:1 呈現、不再縮成一團
+  // 依「載具 + 方向」決定呈現方式：
+  //  · 手機直式（窄且直）→ 捲動檢視、窄版單欄座標系，方便上下滑動與觸控輸入。
+  //  · 手機橫式 / 平板 / 桌機 → 標準橫向翻頁、寬版多欄（投影/簡報模式）。
   function deckSize(){
-    return (window.innerWidth < 760)
-      ? { width:460, height:840, margin:0.02, mobile:true }
-      : { width:1280, height:760, margin:0.04, mobile:false };
+    const portrait = window.matchMedia('(orientation: portrait)').matches;
+    const w = window.innerWidth;
+    if(portrait && w < 760){
+      return { width:460, height:900, margin:0.02, mobile:true, portrait:true };
+    }
+    return { width:1280, height:760, margin:0.04, mobile:false, portrait:false };
   }
   let curMobile = null;
   // 依當前實際視窗寬度套用對應座標系與版面（可重複呼叫、冪等）
