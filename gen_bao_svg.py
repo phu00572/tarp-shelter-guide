@@ -25,8 +25,11 @@ PT4 = (337.5, 427.5)
 
 
 def svg(inner):
-    return (f"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{VW}\" height=\"{VH}\" "
-            f"viewBox=\"0 0 {VW} {VH}\" font-family='{FF}'>" + inner + "</svg>")
+    # 裁掉上方空白（原內容最上緣約在 y=92：bao_1 標籤、bao_4 徽章），下方留到 645（含說明文字）
+    TOP, BOT = 78, 645
+    h = BOT - TOP
+    return (f"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{VW}\" height=\"{h}\" "
+            f"viewBox=\"0 {TOP} {VW} {h}\" font-family='{FF}'>" + inner + "</svg>")
 
 
 def tarp(op=0.42):

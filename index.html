@@ -83,7 +83,7 @@
     /* 圖與提示各自獨立一行、置中（改 block+margin auto，避免短提示時與圖並排靠邊）*/
     .diagram-hero .dwrap{ background:var(--photobg); border-radius:12px; padding:10px; display:block;
       width:fit-content; max-width:80%; margin:0 auto; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
-    .diagram-hero img{ max-width:100%; max-height:548px; object-fit:contain; display:block; }
+    .diagram-hero img{ max-width:100%; max-height:512px; object-fit:contain; display:block; }
     .tip{ display:inline-block; margin-top:14px; background:rgba(20,26,40,0.82); border:1.5px solid var(--warn);
       border-radius:22px; padding:10px 24px; font-size:0.46em; color:#f4eede; line-height:1.5; }
     .tip b{ color:var(--warn); }
@@ -160,10 +160,18 @@
     .wc-canvas-box{ background:rgba(10,14,20,0.6); border-radius:12px; overflow:hidden; position:relative; border:1px solid var(--line); min-height:0; }
     .wc-canvas-box canvas{ width:100%; height:100%; display:block; }
 
-    /* 投票 */
-    .poll-box{ display:flex; flex-direction:column; gap:12px; margin-top:0.7em; max-width:760px; }
-    .poll-btn{ width:100%; padding:18px 20px; background:rgba(18,26,36,0.7); border:1px solid var(--line);
-      border-radius:10px; color:#fff; font-size:0.56em; cursor:pointer; font-family:inherit; }
+    /* 投票（左右滿版）*/
+    .poll-box{ display:flex; flex-direction:column; gap:14px; margin-top:0.7em; max-width:none; width:100%; }
+    .poll-btn{ width:100%; padding:20px 24px; background:rgba(18,26,36,0.7); border:1px solid var(--line);
+      border-radius:10px; color:#fff; font-size:0.58em; cursor:pointer; font-family:inherit; }
+
+    /* 比較雷達圖：左說明、右大圖 */
+    .chart-layout{ display:grid; grid-template-columns:0.72fr 1.28fr; gap:28px; align-items:center; }
+    .chart-info .chart-note{ font-size:0.5em; color:#b9c7bd; line-height:1.6; margin:0.5em 0 0.9em; }
+    .chart-axes{ list-style:none; padding:0; margin:0; }
+    .chart-axes li{ font-size:0.52em; color:#e6ede8; padding:8px 0; border-bottom:1px solid var(--line); }
+    .chart-axes li::before{ content:'◆ '; color:var(--accent2); }
+    .chart-box{ height:610px; max-width:660px; margin:0 auto; }
 
     /* Q&A 側邊欄 */
     .qa-item{ background:rgba(255,255,255,0.06); border-left:3px solid var(--accent); border-radius:8px;
@@ -257,7 +265,14 @@
     body.mobile .wc-canvas-box{ height:340px; }
     body.mobile .qhead{ font-size:0.86em; }
 
-    body.mobile .poll-btn{ font-size:0.6em; padding:13px 15px; }
+    body.mobile .poll-btn{ font-size:0.6em; padding:15px 16px; }
+
+    /* 手機：雷達圖改上下堆疊、圖給足高度 */
+    body.mobile .chart-layout{ grid-template-columns:1fr; gap:8px; }
+    body.mobile .chart-box{ height:360px; }
+    body.mobile .chart-info .chart-note{ font-size:0.56em; }
+    body.mobile .chart-axes{ display:flex; flex-wrap:wrap; gap:6px 16px; }
+    body.mobile .chart-axes li{ font-size:0.56em; border-bottom:none; padding:2px 0; }
 
     /* Reveal 控制列在手機上放大一點、避免太小 */
     body.mobile .reveal .controls{ right:6px; bottom:6px; }
@@ -368,11 +383,11 @@
 
     <!-- 6 章節：包覆式 [BG] -->
     <section data-background-image="images/section_bao.png" data-background-opacity="0.55" data-background-size="cover">
-      <div style="max-width:66%;">
-        <div class="num-badge" style="width:54px; height:54px; font-size:26px; margin-bottom:16px;">1</div>
-        <h1 style="font-size:1.6em; color:#fff; margin:0;">包覆式外帳</h1>
-        <div style="color:var(--warn); font-weight:800; font-size:0.56em; margin:8px 0 16px;">封閉式單人避難帳</div>
-        <p style="font-size:0.46em; color:#eaf2ec; line-height:1.7;">
+      <div style="max-width:74%;">
+        <div class="num-badge" style="width:60px; height:60px; font-size:30px; margin-bottom:18px;">1</div>
+        <h1 style="font-size:1.9em; color:#fff; margin:0;">包覆式外帳</h1>
+        <div style="color:var(--warn); font-weight:800; font-size:0.66em; margin:10px 0 18px;">封閉式單人避難帳</div>
+        <p style="font-size:0.6em; color:#eaf2ec; line-height:1.75;">
           用一片外帳把自己「包」起來，只用一支登山杖就能成型。<br>
           帳身封閉、前高後低，抗風、保暖。<br>
           <b style="color:#cfe0d2;">最適合：強風稜線、低溫、緊急避難過夜。</b>
@@ -382,35 +397,35 @@
 
     <!-- 7 五固定點 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜五個固定點</div>
+      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜五個固定點</div>
       <div class="dwrap"><img src="images/bao_0.svg" alt="五固定點"></div>
       <div class="tip"><b>新手提示　</b>五固定點與順序：B① 為第1、D② 為第2（上緣四分之一處）；N③、H④ 往內為第3、第4；中央登山杖⑤。</div>
     </section>
 
     <!-- 8 步驟1 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 1</div>
+      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 1</div>
       <div class="dwrap"><img src="images/bao_1.svg" alt="步驟1"></div>
       <div class="tip"><b>新手提示　</b>B 點為第1固定點、D 掛點為第2固定點：上緣左右各約四分之一處先下釘。</div>
     </section>
 
     <!-- 9 步驟2 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 2</div>
+      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 2</div>
       <div class="dwrap"><img src="images/bao_2.svg" alt="步驟2"></div>
       <div class="tip"><b>新手提示　</b>將 N 與 H 掛點的四分之一處往下折，整理後暫時固定。</div>
     </section>
 
     <!-- 10 步驟3 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 3</div>
+      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 3</div>
       <div class="dwrap"><img src="images/bao_3.svg" alt="步驟3"></div>
       <div class="tip"><b>新手提示　</b>準備兩頭打結、約 160–165 cm 的營繩平鋪地面，量出並固定第3(N)、第4(H)點。</div>
     </section>
 
     <!-- 11 步驟4 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:0.85em;">包覆式外帳｜步驟 4</div>
+      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 4</div>
       <div class="dwrap"><img src="images/bao_4.svg" alt="步驟4"></div>
       <div class="tip"><b>新手提示　</b>登山杖調 120–125 cm 穿入撐起，上方用繩綁緊防鬆脫，再往外拉繩下釘。</div>
     </section>
@@ -536,9 +551,16 @@
 
     <!-- 18 四型比較雷達圖 [CHART] -->
     <section id="slide-chart" data-background-image="images/bg_compare.png" data-background-opacity="0.16" data-background-size="cover">
-      <div class="qhead">📊 四種搭法快速比較</div>
-      <p style="font-size:0.4em; color:#b9c7bd; margin:0 0 6px;">數值越高代表該項越強（滿分 5）。點下方圖例可切換顯示某一帳型。</p>
-      <div id="chart-box" style="max-width:620px; height:440px; margin:0 auto;"><canvas id="cmp-canvas"></canvas></div>
+      <div class="chart-layout">
+        <div class="chart-info">
+          <div class="qhead">📊 四種搭法<br>快速比較</div>
+          <p class="chart-note">數值越高代表該項越強（滿分 5）。點圖例可切換只看某一帳型。</p>
+          <ul class="chart-axes">
+            <li>防風</li><li>遮蔽 / 包覆</li><li>搭設容易度</li><li>通用性</li>
+          </ul>
+        </div>
+        <div id="chart-box" class="chart-box"><canvas id="cmp-canvas"></canvas></div>
+      </div>
     </section>
 
     <!-- 19 投票 [INTERACT:poll] -->
