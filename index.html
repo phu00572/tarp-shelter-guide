@@ -26,7 +26,7 @@
     }
 
     .sec-title{ font-size:1.05em; font-weight:800; color:var(--success); margin:0 0 4px; }
-    .sec-sub{ font-size:0.42em; color:#b9c7bd; margin:0 0 14px; line-height:1.5; }
+    .sec-sub{ font-size:0.5em; color:#b9c7bd; margin:0 0 14px; line-height:1.5; }
 
     .card{ background:var(--card); border:1px solid var(--line); border-radius:12px;
       backdrop-filter:blur(3px); }
@@ -54,8 +54,8 @@
     .to-photo img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .to-bar{ display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--green); }
     .to-bar .n{ color:var(--accent); font-weight:800; font-size:0.58em; }
-    .to-bar .nm{ color:#fff; font-weight:700; font-size:0.46em; white-space:nowrap; }
-    .to-bar .ds{ color:#e7f0e9; font-size:0.32em; margin-left:auto; text-align:right; line-height:1.35; }
+    .to-bar .nm{ color:#fff; font-weight:700; font-size:0.54em; white-space:nowrap; }
+    .to-bar .ds{ color:#e7f0e9; font-size:0.42em; margin-left:auto; text-align:right; line-height:1.4; }
 
     /* 圖標卡 */
     .icon-grid{ display:grid; gap:14px; margin-top:0.2em; }
@@ -65,17 +65,17 @@
       border-radius:12px; padding:14px 12px; text-align:center; }
     .ic img{ width:74px; height:74px; object-fit:contain; margin:0 auto 8px; display:block;
       filter:drop-shadow(0 0 12px rgba(79,195,247,0.5)); }
-    .ic .t{ font-size:0.42em; font-weight:800; color:var(--accent2); margin-bottom:5px; }
-    .ic .d{ font-size:0.32em; color:#c8d2da; line-height:1.5; }
-    .icon-grid.g3 .ic .d{ font-size:0.36em; }
-    .icon-grid.g3 .ic .t{ font-size:0.52em; }
+    .ic .t{ font-size:0.48em; font-weight:800; color:var(--accent2); margin-bottom:5px; }
+    .ic .d{ font-size:0.4em; color:#cdd6dd; line-height:1.5; }
+    .icon-grid.g3 .ic .d{ font-size:0.44em; }
+    .icon-grid.g3 .ic .t{ font-size:0.58em; }
     .icon-grid.g3 .ic img{ width:96px; height:96px; }
 
     /* 原則卡（第5頁，文字版）*/
     .prin-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:0.2em; }
     .prin-card{ display:flex; gap:12px; align-items:flex-start; padding:16px 16px; }
-    .prin-card .tx .t{ font-weight:800; color:var(--success); font-size:0.46em; margin-bottom:5px; }
-    .prin-card .tx .d{ font-size:0.34em; color:#c8d2da; line-height:1.55; }
+    .prin-card .tx .t{ font-weight:800; color:var(--success); font-size:0.54em; margin-bottom:5px; }
+    .prin-card .tx .d{ font-size:0.42em; color:#cdd6dd; line-height:1.55; }
 
     /* 圖解主視覺頁（示意圖完整 contain）*/
     .reveal .slides section.diagram-hero{ text-align:center; }
@@ -84,7 +84,7 @@
       width:fit-content; max-width:80%; margin:0 auto; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
     .diagram-hero img{ max-width:100%; max-height:460px; object-fit:contain; display:block; }
     .tip{ display:inline-block; margin-top:14px; background:rgba(20,26,40,0.82); border:1.5px solid var(--warn);
-      border-radius:22px; padding:9px 22px; font-size:0.38em; color:#f0e9d8; line-height:1.5; }
+      border-radius:22px; padding:10px 24px; font-size:0.46em; color:#f4eede; line-height:1.5; }
     .tip b{ color:var(--warn); }
     .reveal .slides section.diagram-hero .tip{ display:block; width:fit-content; max-width:92%; margin:14px auto 0; }
 
@@ -97,15 +97,15 @@
     .type-left .pho{ background:var(--photobg); border-radius:10px; height:130px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .type-left .pho img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .steps-card{ padding:18px 20px; }
-    .steps-card h3{ color:var(--success); font-size:0.58em; margin:0 0 12px; }
+    .steps-card h3{ color:var(--success); font-size:0.64em; margin:0 0 12px; }
     .steps-card ol{ margin:0; padding-left:0; list-style:none; counter-reset:s; }
-    .steps-card li{ counter-increment:s; position:relative; padding:0 0 12px 34px; font-size:0.4em; color:#e6ede8; line-height:1.5; }
+    .steps-card li{ counter-increment:s; position:relative; padding:0 0 12px 34px; font-size:0.48em; color:#e9f0ea; line-height:1.5; }
     .steps-card li::before{ content:counter(s); position:absolute; left:0; top:0; width:24px; height:24px;
       background:var(--accent); color:#fff; border-radius:50%; font-size:0.8em; font-weight:800;
       display:flex; align-items:center; justify-content:center; }
     .best-card{ margin-top:12px; background:rgba(44,95,62,0.9); border:1px solid rgba(129,199,132,0.3); border-radius:12px; padding:13px 18px; }
-    .best-card .bt{ color:var(--warn); font-weight:800; font-size:0.4em; margin-bottom:6px; }
-    .best-card .bd{ color:#fff; font-size:0.38em; line-height:1.5; }
+    .best-card .bt{ color:var(--warn); font-weight:800; font-size:0.46em; margin-bottom:6px; }
+    .best-card .bd{ color:#fff; font-size:0.46em; line-height:1.55; }
 
     /* 步驟完成頁：三張圖合併於單一深色大區塊 */
     .done-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:center;
@@ -115,29 +115,29 @@
     .done-photos{ display:grid; gap:12px; }
     .done-photos .pbox{ border-radius:8px; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .done-photos .pbox img{ max-width:100%; max-height:100%; object-fit:contain; }
-    .key-strip{ margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 20px; font-size:0.38em; color:#e6ede8; line-height:1.7; }
+    .key-strip{ margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 20px; font-size:0.44em; color:#e9f0ea; line-height:1.7; }
     .key-strip b{ color:var(--success); }
 
     /* 出入口頁 */
     .door-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center; }
     .door-cards{ display:flex; flex-direction:column; gap:12px; }
     .door-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.42em; margin-bottom:4px; }
-    .door-card .tx .d{ font-size:0.34em; color:#cbd5ce; line-height:1.5; }
+    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.48em; margin-bottom:4px; }
+    .door-card .tx .d{ font-size:0.42em; color:#d2dbd4; line-height:1.5; }
     .door-photo{ background:var(--photobg); border-radius:12px; height:400px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .door-photo img{ max-width:100%; max-height:100%; object-fit:contain; }
 
     /* 安全 6 卡 */
     .safe-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:0.2em; }
     .safe-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.4em; margin-bottom:3px; }
-    .safe-card .tx .d{ font-size:0.32em; color:#c8d2da; line-height:1.45; }
+    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.46em; margin-bottom:3px; }
+    .safe-card .tx .d{ font-size:0.4em; color:#cdd6dd; line-height:1.45; }
 
     /* 結語 */
     .end-slide{ text-align:center; }
     .end-slide h1{ font-size:1.7em; color:#fff; }
-    .end-slide .lead{ font-size:0.5em; color:#dfeade; line-height:1.7; margin:0.6em auto; max-width:82%; }
-    .end-slide .tagline{ font-size:0.4em; color:#a9c0b0; font-style:italic; margin-top:1em; }
+    .end-slide .lead{ font-size:0.56em; color:#dfeade; line-height:1.7; margin:0.6em auto; max-width:86%; }
+    .end-slide .tagline{ font-size:0.46em; color:#a9c0b0; font-style:italic; margin-top:1em; }
 
     /* 互動通用 */
     .ui-input{ width:100%; padding:11px 13px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
@@ -193,23 +193,23 @@
 
     body.mobile .type-overview{ grid-template-columns:1fr; gap:12px; }
     body.mobile .to-photo{ height:150px; }
-    body.mobile .to-bar .nm{ font-size:0.56em; }
-    body.mobile .to-bar .ds{ font-size:0.4em; }
+    body.mobile .to-bar .nm{ font-size:0.6em; }
+    body.mobile .to-bar .ds{ font-size:0.46em; }
 
     body.mobile .icon-grid.g6{ grid-template-columns:1fr 1fr; gap:10px; }
     body.mobile .icon-grid.g3{ grid-template-columns:1fr; gap:10px; }
     body.mobile .ic{ display:flex; align-items:center; gap:12px; text-align:left; padding:10px 12px; }
     body.mobile .ic img{ width:52px; height:52px; margin:0; flex:0 0 auto; }
     body.mobile .icon-grid.g3 .ic img{ width:64px; height:64px; }
-    body.mobile .ic .t{ font-size:0.5em; margin-bottom:3px; }
-    body.mobile .ic .d{ font-size:0.4em; }
-    body.mobile .icon-grid.g3 .ic .t{ font-size:0.58em; }
-    body.mobile .icon-grid.g3 .ic .d{ font-size:0.42em; }
+    body.mobile .ic .t{ font-size:0.56em; margin-bottom:3px; }
+    body.mobile .ic .d{ font-size:0.46em; }
+    body.mobile .icon-grid.g3 .ic .t{ font-size:0.64em; }
+    body.mobile .icon-grid.g3 .ic .d{ font-size:0.5em; }
 
     body.mobile .prin-grid{ grid-template-columns:1fr; gap:10px; }
     body.mobile .prin-card{ padding:12px 14px; }
-    body.mobile .prin-card .tx .t{ font-size:0.56em; }
-    body.mobile .prin-card .tx .d{ font-size:0.42em; }
+    body.mobile .prin-card .tx .t{ font-size:0.62em; }
+    body.mobile .prin-card .tx .d{ font-size:0.5em; }
 
     body.mobile .diagram-hero .dwrap{ max-width:100%; }
     body.mobile .diagram-hero img{ max-height:300px; }
@@ -222,24 +222,24 @@
     body.mobile .type-left .pho{ flex:1; height:auto; }
     body.mobile .steps-card{ padding:14px 16px; }
     body.mobile .steps-card h3{ font-size:0.72em; }
-    body.mobile .steps-card li{ font-size:0.5em; padding-bottom:9px; }
-    body.mobile .best-card .bt{ font-size:0.5em; }
-    body.mobile .best-card .bd{ font-size:0.46em; }
+    body.mobile .steps-card li{ font-size:0.56em; padding-bottom:9px; }
+    body.mobile .best-card .bt{ font-size:0.54em; }
+    body.mobile .best-card .bd{ font-size:0.52em; }
 
     body.mobile .done-grid{ grid-template-columns:1fr; gap:10px; }
     body.mobile .done-grid .diabox img{ max-height:230px; }
     body.mobile .done-photos{ grid-template-columns:1fr 1fr; }
     body.mobile .done-photos .pbox{ height:110px; }
-    body.mobile .key-strip{ font-size:0.44em; }
+    body.mobile .key-strip{ font-size:0.5em; }
 
     body.mobile .door-grid{ grid-template-columns:1fr; gap:12px; }
     body.mobile .door-photo{ height:230px; order:-1; }
-    body.mobile .door-card .tx .t{ font-size:0.52em; }
-    body.mobile .door-card .tx .d{ font-size:0.42em; }
+    body.mobile .door-card .tx .t{ font-size:0.58em; }
+    body.mobile .door-card .tx .d{ font-size:0.48em; }
 
     body.mobile .safe-grid{ grid-template-columns:1fr; gap:9px; }
-    body.mobile .safe-card .tx .t{ font-size:0.52em; }
-    body.mobile .safe-card .tx .d{ font-size:0.42em; }
+    body.mobile .safe-card .tx .t{ font-size:0.58em; }
+    body.mobile .safe-card .tx .d{ font-size:0.48em; }
 
     body.mobile .end-slide h1{ font-size:1.4em; }
     body.mobile .end-slide .lead{ font-size:0.6em; max-width:96%; }
