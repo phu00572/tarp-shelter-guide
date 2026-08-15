@@ -79,12 +79,14 @@
 
     /* 圖解主視覺頁（示意圖完整 contain）*/
     .reveal .slides section.diagram-hero{ text-align:center; }
-    .diagram-hero .dwrap{ background:var(--photobg); border-radius:12px; padding:10px; display:inline-block;
-      max-width:80%; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
+    /* 圖與提示各自獨立一行、置中（改 block+margin auto，避免短提示時與圖並排靠邊）*/
+    .diagram-hero .dwrap{ background:var(--photobg); border-radius:12px; padding:10px; display:block;
+      width:fit-content; max-width:80%; margin:0 auto; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
     .diagram-hero img{ max-width:100%; max-height:460px; object-fit:contain; display:block; }
     .tip{ display:inline-block; margin-top:14px; background:rgba(20,26,40,0.82); border:1.5px solid var(--warn);
       border-radius:22px; padding:9px 22px; font-size:0.38em; color:#f0e9d8; line-height:1.5; }
     .tip b{ color:var(--warn); }
+    .reveal .slides section.diagram-hero .tip{ display:block; width:fit-content; max-width:92%; margin:14px auto 0; }
 
     /* 帳型頁：左圖右步驟（圖片完整 contain）*/
     .type-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:20px; align-items:stretch; }
