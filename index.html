@@ -25,8 +25,8 @@
       content:''; position:absolute; inset:0; background:rgba(7,11,18,0.35);
     }
 
-    .sec-title{ font-size:1.05em; font-weight:800; color:var(--success); margin:0 0 4px; }
-    .sec-sub{ font-size:0.5em; color:#b9c7bd; margin:0 0 14px; line-height:1.5; }
+    .sec-title{ font-size:1.14em; font-weight:800; color:var(--success); margin:0 0 6px; }
+    .sec-sub{ font-size:0.55em; color:#b9c7bd; margin:0 0 16px; line-height:1.5; }
 
     .card{ background:var(--card); border:1px solid var(--line); border-radius:12px;
       backdrop-filter:blur(3px); }
@@ -50,7 +50,7 @@
     /* 四型照片一覽（完整帳篷，contain）*/
     .type-overview{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0.3em; }
     .to-card{ border-radius:12px; overflow:hidden; background:var(--card); border:1px solid var(--line); }
-    .to-photo{ width:100%; height:168px; background:var(--photobg); display:flex; align-items:center; justify-content:center; }
+    .to-photo{ width:100%; height:210px; background:var(--photobg); display:flex; align-items:center; justify-content:center; }
     .to-photo img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .to-bar{ display:flex; align-items:center; gap:10px; padding:9px 12px; background:var(--green); }
     .to-bar .n{ color:var(--accent); font-weight:800; font-size:0.58em; }
@@ -63,26 +63,27 @@
     .icon-grid.g3{ grid-template-columns:repeat(3,1fr); }
     .ic{ background:var(--card); border:1px solid var(--line); border-top:4px solid var(--accent2);
       border-radius:12px; padding:14px 12px; text-align:center; }
-    .ic img{ width:74px; height:74px; object-fit:contain; margin:0 auto 8px; display:block;
+    .ic img{ width:88px; height:88px; object-fit:contain; margin:0 auto 10px; display:block;
       filter:drop-shadow(0 0 12px rgba(79,195,247,0.5)); }
-    .ic .t{ font-size:0.48em; font-weight:800; color:var(--accent2); margin-bottom:5px; }
-    .ic .d{ font-size:0.4em; color:#cdd6dd; line-height:1.5; }
-    .icon-grid.g3 .ic .d{ font-size:0.44em; }
-    .icon-grid.g3 .ic .t{ font-size:0.58em; }
-    .icon-grid.g3 .ic img{ width:96px; height:96px; }
+    .ic .t{ font-size:0.54em; font-weight:800; color:var(--accent2); margin-bottom:6px; }
+    .ic .d{ font-size:0.45em; color:#cdd6dd; line-height:1.5; }
+    .icon-grid.g3 .ic{ padding:24px 16px; }
+    .icon-grid.g3 .ic .d{ font-size:0.6em; }
+    .icon-grid.g3 .ic .t{ font-size:0.78em; }
+    .icon-grid.g3 .ic img{ width:168px; height:168px; }
 
     /* 原則卡（第5頁，文字版）*/
-    .prin-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:0.2em; }
-    .prin-card{ display:flex; gap:12px; align-items:flex-start; padding:16px 16px; }
-    .prin-card .tx .t{ font-weight:800; color:var(--success); font-size:0.54em; margin-bottom:5px; }
-    .prin-card .tx .d{ font-size:0.42em; color:#cdd6dd; line-height:1.55; }
+    .prin-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; margin-top:0.3em; }
+    .prin-card{ display:flex; gap:16px; align-items:flex-start; padding:30px 24px; min-height:190px; box-sizing:border-box; }
+    .prin-card .tx .t{ font-weight:800; color:var(--success); font-size:0.72em; margin-bottom:10px; }
+    .prin-card .tx .d{ font-size:0.6em; color:#cdd6dd; line-height:1.65; }
 
     /* 圖解主視覺頁（示意圖完整 contain）*/
     .reveal .slides section.diagram-hero{ text-align:center; }
     /* 圖與提示各自獨立一行、置中（改 block+margin auto，避免短提示時與圖並排靠邊）*/
     .diagram-hero .dwrap{ background:var(--photobg); border-radius:12px; padding:10px; display:block;
       width:fit-content; max-width:80%; margin:0 auto; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
-    .diagram-hero img{ max-width:100%; max-height:460px; object-fit:contain; display:block; }
+    .diagram-hero img{ max-width:100%; max-height:548px; object-fit:contain; display:block; }
     .tip{ display:inline-block; margin-top:14px; background:rgba(20,26,40,0.82); border:1.5px solid var(--warn);
       border-radius:22px; padding:10px 24px; font-size:0.46em; color:#f4eede; line-height:1.5; }
     .tip b{ color:var(--warn); }
@@ -92,9 +93,9 @@
     .type-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:20px; align-items:stretch; }
     .type-left{ display:flex; flex-direction:column; gap:12px; }
     .type-left .dia{ background:var(--photobg); border-radius:12px; padding:8px; text-align:center;
-      display:flex; align-items:center; justify-content:center; min-height:240px; }
-    .type-left .dia img{ max-width:100%; max-height:250px; object-fit:contain; }
-    .type-left .pho{ background:var(--photobg); border-radius:10px; height:130px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+      display:flex; align-items:center; justify-content:center; min-height:300px; }
+    .type-left .dia img{ max-width:100%; max-height:320px; object-fit:contain; }
+    .type-left .pho{ background:var(--photobg); border-radius:10px; height:165px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .type-left .pho img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
     .steps-card{ padding:18px 20px; }
     .steps-card h3{ color:var(--success); font-size:0.64em; margin:0 0 12px; }
@@ -111,9 +112,9 @@
     .done-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:16px; align-items:center;
       background:var(--photobg); border:1px solid var(--line); border-radius:14px; padding:16px; }
     .done-grid .diabox{ display:flex; align-items:center; justify-content:center; }
-    .done-grid .diabox img{ max-width:100%; max-height:330px; object-fit:contain; }
-    .done-photos{ display:grid; gap:12px; }
-    .done-photos .pbox{ border-radius:8px; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .done-grid .diabox img{ max-width:100%; max-height:400px; object-fit:contain; }
+    .done-photos{ display:grid; gap:14px; }
+    .done-photos .pbox{ border-radius:8px; height:185px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .done-photos .pbox img{ max-width:100%; max-height:100%; object-fit:contain; }
     .key-strip{ margin-top:14px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 20px; font-size:0.44em; color:#e9f0ea; line-height:1.7; }
     .key-strip b{ color:var(--success); }
@@ -122,16 +123,16 @@
     .door-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:center; }
     .door-cards{ display:flex; flex-direction:column; gap:12px; }
     .door-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.48em; margin-bottom:4px; }
-    .door-card .tx .d{ font-size:0.42em; color:#d2dbd4; line-height:1.5; }
-    .door-photo{ background:var(--photobg); border-radius:12px; height:400px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .door-card .tx .t{ font-weight:800; color:var(--success); font-size:0.54em; margin-bottom:5px; }
+    .door-card .tx .d{ font-size:0.47em; color:#d2dbd4; line-height:1.5; }
+    .door-photo{ background:var(--photobg); border-radius:12px; height:475px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
     .door-photo img{ max-width:100%; max-height:100%; object-fit:contain; }
 
     /* 安全 6 卡 */
-    .safe-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:0.2em; }
-    .safe-card{ display:flex; gap:12px; align-items:flex-start; padding:12px 14px; }
-    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.46em; margin-bottom:3px; }
-    .safe-card .tx .d{ font-size:0.4em; color:#cdd6dd; line-height:1.45; }
+    .safe-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:0.3em; }
+    .safe-card{ display:flex; gap:16px; align-items:flex-start; padding:24px 20px; min-height:132px; box-sizing:border-box; }
+    .safe-card .tx .t{ font-weight:800; color:var(--success); font-size:0.6em; margin-bottom:6px; }
+    .safe-card .tx .d{ font-size:0.52em; color:#cdd6dd; line-height:1.6; }
 
     /* 結語 */
     .end-slide{ text-align:center; }
@@ -145,13 +146,13 @@
     .ui-btn{ padding:11px 15px; background:var(--accent2); color:#0d1117; border:none; border-radius:8px;
       font-weight:700; font-size:15px; cursor:pointer; font-family:inherit; }
     .ui-btn:disabled{ opacity:0.5; cursor:default; }
-    .qhead{ font-size:1em; margin-bottom:0.3em; color:#fff; }
+    .qhead{ font-size:1.12em; margin-bottom:0.4em; color:#fff; }
     .live-badge{ display:inline-block; background:#ff4757; color:#fff; padding:2px 8px; border-radius:10px;
       font-size:0.5em; vertical-align:middle; animation:pulse 1.5s infinite; margin-left:8px; }
     @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.55;} }
 
     /* 文字雲 */
-    .wc-wrap{ display:grid; grid-template-columns:250px 1fr; gap:14px; height:440px; }
+    .wc-wrap{ display:grid; grid-template-columns:280px 1fr; gap:16px; height:500px; }
     .wc-side{ display:flex; flex-direction:column; gap:10px; min-height:0; }
     .wc-form{ background:rgba(18,26,36,0.72); border-radius:10px; padding:14px; }
     .wc-form .lb{ font-size:0.36em; color:var(--accent2); font-weight:700; margin-bottom:8px; }
@@ -161,8 +162,8 @@
 
     /* 投票 */
     .poll-box{ display:flex; flex-direction:column; gap:12px; margin-top:0.7em; max-width:760px; }
-    .poll-btn{ width:100%; padding:14px 18px; background:rgba(18,26,36,0.7); border:1px solid var(--line);
-      border-radius:10px; color:#fff; font-size:0.46em; cursor:pointer; font-family:inherit; }
+    .poll-btn{ width:100%; padding:18px 20px; background:rgba(18,26,36,0.7); border:1px solid var(--line);
+      border-radius:10px; color:#fff; font-size:0.56em; cursor:pointer; font-family:inherit; }
 
     /* Q&A 側邊欄 */
     .qa-item{ background:rgba(255,255,255,0.06); border-left:3px solid var(--accent); border-radius:8px;
