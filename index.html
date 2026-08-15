@@ -171,7 +171,7 @@
     .chart-axes{ list-style:none; padding:0; margin:0; }
     .chart-axes li{ font-size:0.52em; color:#e6ede8; padding:8px 0; border-bottom:1px solid var(--line); }
     .chart-axes li::before{ content:'◆ '; color:var(--accent2); }
-    .chart-box{ height:610px; max-width:660px; margin:0 auto; }
+    .chart-box{ width:100%; max-width:600px; margin:0 auto; }  /* 正方形由寬度決定（maintainAspectRatio:1）*/
 
     /* Q&A 側邊欄 */
     .qa-item{ background:rgba(255,255,255,0.06); border-left:3px solid var(--accent); border-radius:8px;
@@ -268,8 +268,8 @@
     body.mobile .poll-btn{ font-size:0.6em; padding:15px 16px; }
 
     /* 手機：雷達圖改上下堆疊、圖給足高度 */
-    body.mobile .chart-layout{ grid-template-columns:1fr; gap:8px; }
-    body.mobile .chart-box{ height:360px; }
+    body.mobile .chart-layout{ grid-template-columns:1fr; gap:10px; }
+    body.mobile .chart-box{ max-width:88%; }
     body.mobile .chart-info .chart-note{ font-size:0.56em; }
     body.mobile .chart-axes{ display:flex; flex-wrap:wrap; gap:6px 16px; }
     body.mobile .chart-axes li{ font-size:0.56em; border-bottom:none; padding:2px 0; }
@@ -397,42 +397,42 @@
 
     <!-- 7 五固定點 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜五個固定點</div>
+      <div class="sec-title" style="text-align:center;">包覆式外帳｜五個固定點</div>
       <div class="dwrap"><img src="images/bao_0.svg" alt="五固定點"></div>
       <div class="tip"><b>新手提示　</b>五固定點與順序：B① 為第1、D② 為第2（上緣四分之一處）；N③、H④ 往內為第3、第4；中央登山杖⑤。</div>
     </section>
 
     <!-- 8 步驟1 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 1</div>
+      <div class="sec-title" style="text-align:center;">包覆式外帳｜步驟 1</div>
       <div class="dwrap"><img src="images/bao_1.svg" alt="步驟1"></div>
       <div class="tip"><b>新手提示　</b>B 點為第1固定點、D 掛點為第2固定點：上緣左右各約四分之一處先下釘。</div>
     </section>
 
     <!-- 9 步驟2 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 2</div>
+      <div class="sec-title" style="text-align:center;">包覆式外帳｜步驟 2</div>
       <div class="dwrap"><img src="images/bao_2.svg" alt="步驟2"></div>
       <div class="tip"><b>新手提示　</b>將 N 與 H 掛點的四分之一處往下折，整理後暫時固定。</div>
     </section>
 
     <!-- 10 步驟3 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 3</div>
+      <div class="sec-title" style="text-align:center;">包覆式外帳｜步驟 3</div>
       <div class="dwrap"><img src="images/bao_3.svg" alt="步驟3"></div>
       <div class="tip"><b>新手提示　</b>準備兩頭打結、約 160–165 cm 的營繩平鋪地面，量出並固定第3(N)、第4(H)點。</div>
     </section>
 
     <!-- 11 步驟4 -->
     <section class="diagram-hero" data-background-image="images/bg_bao_steps.png" data-background-opacity="0.14" data-background-size="cover">
-      <div class="sec-title" style="text-align:center; font-size:1.1em;">包覆式外帳｜步驟 4</div>
+      <div class="sec-title" style="text-align:center;">包覆式外帳｜步驟 4</div>
       <div class="dwrap"><img src="images/bao_4.svg" alt="步驟4"></div>
       <div class="tip"><b>新手提示　</b>登山杖調 120–125 cm 穿入撐起，上方用繩綁緊防鬆脫，再往外拉繩下釘。</div>
     </section>
 
     <!-- 12 完成：內部整理 -->
     <section data-background-image="images/bg_bao_done.png" data-background-opacity="0.16" data-background-size="cover">
-      <div class="sec-title" style="font-size:0.92em;">包覆式外帳｜步驟 5 完成：內部整理</div>
+      <div class="sec-title">包覆式外帳｜步驟 5 完成：內部整理</div>
       <div class="done-grid">
         <div class="diabox"><img src="images/bao_done.svg" alt="完成示意"></div>
         <div class="done-photos">
@@ -832,7 +832,7 @@
     if(typeof Chart==='undefined') return;
     const ctx = document.getElementById('cmp-canvas'); if(!ctx) return;
     const box = ctx.parentElement.getBoundingClientRect();
-    if(box.height < 20 || box.width < 20){ setTimeout(window.initCmpChart, 250); return; }   // 容器尚未有尺寸 → 稍後再試
+    if(box.width < 20){ setTimeout(window.initCmpChart, 250); return; }   // 容器尚未有寬度 → 稍後再試（正方形由寬度決定）
     if(cmpChart){ cmpChart.resize(); return; }        // 已建立 → 只重繪，避免空白圖卡住
     cmpChart = new Chart(ctx, {
       type:'radar',
@@ -846,12 +846,12 @@
         ]
       },
       options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ labels:{ color:'#ddd', font:{ size:13 } } } },
+        responsive:true, maintainAspectRatio:true, aspectRatio:1,
+        plugins:{ legend:{ position:'top', labels:{ color:'#e6ede8', font:{ size:15 }, padding:16, boxWidth:18 } } },
         scales:{ r:{
           min:0, max:5, ticks:{ stepSize:1, color:'#8a97a0', backdropColor:'transparent' },
-          grid:{ color:'rgba(255,255,255,0.14)' }, angleLines:{ color:'rgba(255,255,255,0.14)' },
-          pointLabels:{ color:'#eaf2ec', font:{ size:14, weight:'700' } }
+          grid:{ color:'rgba(255,255,255,0.16)' }, angleLines:{ color:'rgba(255,255,255,0.16)' },
+          pointLabels:{ color:'#eaf2ec', font:{ size:16, weight:'700' } }
         } }
       }
     });
