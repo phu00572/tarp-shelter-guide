@@ -274,8 +274,22 @@
     body.mobile .chart-axes{ display:flex; flex-wrap:wrap; gap:6px 16px; }
     body.mobile .chart-axes li{ font-size:0.56em; border-bottom:none; padding:2px 0; }
 
-    /* Reveal 控制列在手機上放大一點、避免太小 */
-    body.mobile .reveal .controls{ right:6px; bottom:6px; }
+    /* 手機直式：標準翻頁；單頁內容過長時可「頁內上下捲動」看完整頁（內容短則置中）*/
+    body.mobile .reveal .slides > section.present,
+    body.mobile .reveal .slides > section.past,
+    body.mobile .reveal .slides > section.future{
+      height:100%; box-sizing:border-box;
+      display:flex; flex-direction:column; justify-content:safe center;
+      overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+      padding:16px 12px 64px; scrollbar-width:none;
+    }
+    body.mobile .reveal .slides > section::-webkit-scrollbar{ display:none; }
+
+    /* 換頁箭頭在手機上放大、明顯（換頁主要靠它）*/
+    body.mobile .reveal .controls{ right:10px; bottom:10px; }
+    body.mobile .reveal .controls .controls-arrow{ width:52px; height:52px; }
+    body.mobile .reveal .controls .controls-arrow::before,
+    body.mobile .reveal .controls .controls-arrow::after{ height:8px; }
 
     /* 手機直式：四型卡片標題列改為「編號+名稱」一行、說明另起一行左對齊（避免右擠、換行破碎）*/
     body.mobile .to-bar{ flex-wrap:wrap; padding:10px 12px; }
@@ -621,40 +635,41 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-  // 依「載具 + 方向」決定呈現方式：
-  //  · 手機直式（窄且直）→ 捲動檢視、窄版單欄座標系，方便上下滑動與觸控輸入。
-  //  · 手機橫式 / 平板 / 桌機 → 標準橫向翻頁、寬版多欄（投影/簡報模式）。
+  // 依「載具 + 方向」決定呈現方式（兩者都用「標準橫向翻頁」＝箭頭/左右滑動換頁）：
+  //  · 手機直式：窄版單欄；單頁高度貼合螢幕，頁面內容過長時可在「頁內上下滑動」看完整頁（見 CSS 的 body.mobile section overflow）。
+  //  · 手機橫式 / 平板 / 桌機：寬版多欄（投影/簡報模式）。
   function deckSize(){
     const portrait = window.matchMedia('(orientation: portrait)').matches;
-    const w = window.innerWidth;
+    const w = window.innerWidth, h = window.innerHeight;
     if(portrait && w < 760){
-      return { width:460, height:900, margin:0.02, mobile:true, portrait:true };
+      const vh = Math.max(860, Math.round(460 * h / Math.max(1, w)));  // 讓單頁高度貼合手機螢幕比例
+      return { width:460, height:vh, margin:0.01, mobile:true, center:false, touch:false };  // 關閉滑動換頁→用箭頭換頁、直向滑動改為頁內捲動
     }
-    return { width:1280, height:760, margin:0.04, mobile:false, portrait:false };
+    return { width:1280, height:760, margin:0.04, mobile:false, center:true, touch:true };
   }
-  let curMobile = null;
-  // 依當前實際視窗寬度套用對應座標系與版面（可重複呼叫、冪等）
-  // 手機：啟用 Reveal 捲動檢視（view:'scroll'）→ 整份簡報可上下滑動、頁面過長不會被切掉、輸入框可見；
-  // 桌機/平板：標準橫向翻頁。
+  let curMobile = null, curH = 0;
+  // 重新套用對應座標系與版面（手機高度會隨螢幕/旋轉變動 → 每次都重設）
   function applyResponsive(){
     const n = deckSize();
-    if(n.mobile === curMobile){ Reveal.layout(); return; }
-    curMobile = n.mobile;
     document.body.classList.toggle('mobile', n.mobile);
-    Reveal.configure({ width:n.width, height:n.height, margin:n.margin, view: n.mobile ? 'scroll' : null });
+    Reveal.configure({ width:n.width, height:n.height, margin:n.margin, center:n.center, touch:n.touch, view:null });
     Reveal.layout();
-    setTimeout(()=>{ window.drawWordCloud&&window.drawWordCloud(); window.initCmpChart&&window.initCmpChart(); }, 250);
+    curMobile = n.mobile; curH = n.height;
+    // 只重繪「目前這頁」的畫布，避免在非該頁時反覆重試
+    setTimeout(()=>{ const id=Reveal.getCurrentSlide&&Reveal.getCurrentSlide()?.id;
+      if(id==='slide-wordcloud') window.drawWordCloud&&window.drawWordCloud();
+      if(id==='slide-chart') window.initCmpChart&&window.initCmpChart(); }, 250);
   }
   const ds = deckSize();
   document.body.classList.toggle('mobile', ds.mobile);
-  curMobile = ds.mobile;
+  curMobile = ds.mobile; curH = ds.height;
   Reveal.initialize({
     hash:true, transition:'slide', backgroundTransition:'fade',
-    center:true, progress:true, controls:true, slideNumber:'c/t',
+    center:ds.center, touch:ds.touch, progress:true, controls:true, slideNumber:'c/t',
     width:ds.width, height:ds.height, margin:ds.margin,
     minScale:0.2, maxScale:1.6,
-    view: ds.mobile ? 'scroll' : null,   // 手機捲動檢視、桌機標準檢視
-    scrollActivationWidth: null,         // 由上面的 view 明確控制，不用自動寬度判斷
+    view:null,                    // 一律標準橫向翻頁（箭頭換頁）
+    scrollActivationWidth:null,   // 不自動進入捲動檢視
     plugins:[]
   });
   // 真實視窗寬度在 ready / load / resize 後才確定 → 重新套用，避免初始化時機誤判
@@ -861,42 +876,22 @@
     const id = e.currentSlide?.id;
     if(id==='slide-wordcloud') setTimeout(window.drawWordCloud, 150);
     if(id==='slide-chart')     setTimeout(window.initCmpChart, 150);
+    if(e.currentSlide) e.currentSlide.scrollTop = 0;   // 新頁從頂端開始（頁內可捲動時）
   });
   Reveal.on('ready', e=>{
-    if(e.currentSlide?.id==='slide-wordcloud') setTimeout(window.drawWordCloud, 200);
-    // 手機捲動檢視：所有頁面同時存在於捲動流中（容器都有尺寸）→ 載入後直接初始化圖表與文字雲，
-    // 不必等 slidechanged（捲動檢視不一定觸發）。
-    if(document.body.classList.contains('mobile')){
-      setTimeout(()=>{ window.drawWordCloud&&window.drawWordCloud(); window.initCmpChart&&window.initCmpChart(); }, 500);
-    }
+    const id = e.currentSlide?.id;
+    if(id==='slide-wordcloud') setTimeout(window.drawWordCloud, 200);
+    if(id==='slide-chart')     setTimeout(window.initCmpChart, 200);
   });
-  // 捲動檢視（手機）下 slidechanged 不一定觸發 → 用 IntersectionObserver：畫布捲進畫面才繪製，
-  // 兩種檢視模式都適用。
+  // 保險：圖表/文字雲頁進入視窗時再繪製（標準翻頁下主要由 slidechanged 觸發）
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(en=>{
       if(!en.isIntersecting) return;
       if(en.target.id==='slide-wordcloud') setTimeout(window.drawWordCloud, 120);
       if(en.target.id==='slide-chart')     setTimeout(window.initCmpChart, 120);
     });
-  }, { threshold:0.15 });
+  }, { threshold:0.2 });
   ['slide-wordcloud','slide-chart'].forEach(id=>{ const el=document.getElementById(id); if(el) io.observe(el); });
-
-  // 額外保險：捲動時若圖表／文字雲頁進入視窗，就繪製（捲動檢視在部分環境不觸發 IO/slidechanged）
-  let scrT;
-  function renderIfVisible(){
-    const vh = window.innerHeight;
-    ['slide-wordcloud','slide-chart'].forEach(id=>{
-      const el=document.getElementById(id); if(!el) return;
-      const r=el.getBoundingClientRect();
-      if(r.top < vh*0.9 && r.bottom > vh*0.1){
-        if(id==='slide-wordcloud') window.drawWordCloud&&window.drawWordCloud();
-        if(id==='slide-chart') window.initCmpChart&&window.initCmpChart();
-      }
-    });
-  }
-  const scroller = document.querySelector('.reveal') || window;
-  scroller.addEventListener('scroll', ()=>{ clearTimeout(scrT); scrT=setTimeout(renderIfVisible, 120); }, { passive:true });
-  window.addEventListener('scroll', ()=>{ clearTimeout(scrT); scrT=setTimeout(renderIfVisible, 120); }, { passive:true });
 
   document.querySelectorAll('[data-prevent-swipe]').forEach(el=>{
     ['touchstart','touchmove','touchend'].forEach(ev=>
